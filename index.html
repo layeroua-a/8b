@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#07080c">
+<title>Наш клас</title>
+<style>
+:root{--bg:#07080c;--c:#12141c;--c2:#1a1d28;--t:#f2f4fa;--m:#8b90a3;--a:#5b9cff;--b:#9d7bff;--g:#3ddc97;--ln:#ffffff14;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--t);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background-image:radial-gradient(600px 400px at 10% -5%,#5b9cff26,transparent),radial-gradient(500px 400px at 100% 10%,#9d7bff22,transparent);background-attachment:fixed}
+#app{max-width:640px;margin:0 auto;padding:0 14px calc(104px + env(safe-area-inset-bottom,0px))}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 4px;margin:0 -4px;background:#07080cb8;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.cl{font-weight:800;font-size:20px;background:linear-gradient(90deg,var(--a),var(--b));-webkit-background-clip:text;background-clip:text;color:transparent}
+#st{font-size:13px;color:var(--m);margin-top:2px}
+.clk{font-variant-numeric:tabular-nums;font-weight:700;font-size:18px;padding:6px 12px;border-radius:12px;background:var(--c);border:1px solid var(--ln)}
+h2{margin:14px 0 4px;font-size:26px;letter-spacing:-.5px}h3{margin:18px 0 8px;color:var(--a)}
+.mut,small{color:var(--m)}.mut{margin:4px 0 12px;font-size:14px}
+.in{animation:up .45s cubic-bezier(.2,.8,.2,1) both}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.card{background:linear-gradient(180deg,var(--c2),var(--c));border:1px solid var(--ln);border-radius:18px;padding:14px;margin:10px 0;animation:up .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*55ms)}
+.pills{display:flex;gap:8px;overflow-x:auto;padding:4px 0 8px;scrollbar-width:none}
+.pill{flex:1;min-width:48px;border:1px solid var(--ln);background:var(--c);color:var(--m);padding:10px 12px;border-radius:14px;font:inherit;font-weight:600;cursor:pointer;transition:.25s}
+.pill.on{color:#fff;background:linear-gradient(135deg,var(--a),var(--b));border-color:transparent;box-shadow:0 6px 22px #5b9cff44;transform:translateY(-1px)}
+.les{display:flex;align-items:center;gap:14px;transition:.25s}
+.les .num{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:#5b9cff1f;color:var(--a);flex:none}
+.les>div:nth-child(2){flex:1;min-width:0}.sb{font-weight:700}
+.rt{text-align:right;display:flex;flex-direction:column;gap:2px}.room{font-weight:600;color:var(--g);font-size:14px}
+.cur{border-color:var(--a);box-shadow:0 0 0 1px var(--a),0 8px 30px #5b9cff33}
+.cur .num{background:var(--a);color:#fff;animation:pl 1.8s infinite}
+@keyframes pl{50%{box-shadow:0 0 0 7px #5b9cff00;transform:scale(1.08)}0%{box-shadow:0 0 0 0 #5b9cff88}}
+.av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:800;flex:none;color:#fff}
+.lk{display:flex;align-items:center;gap:12px;color:inherit;text-decoration:none;transition:.2s}.lk:hover,.lk:active{transform:scale(.98);border-color:var(--a)}
+.lk b{display:block}.lk small{display:block;word-break:break-all}.ar{margin-left:auto;color:var(--a);font-size:20px}
+.big{text-align:center;padding:30px 14px;background:linear-gradient(135deg,#5b9cff2e,#9d7bff2e)}
+.cdn{font-size:84px;font-weight:900;line-height:1;background:linear-gradient(90deg,var(--a),var(--b));-webkit-background-clip:text;background-clip:text;color:transparent}
+.g4{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.sm{text-align:center}.sm b{font-size:30px;font-variant-numeric:tabular-nums;display:block}
+.opt{position:relative;overflow:hidden;display:flex;justify-content:space-between;align-items:center;width:100%;color:var(--t);font:inherit;text-align:left;cursor:pointer;padding:16px;transition:.2s}
+.opt i{position:absolute;left:0;top:0;bottom:0;width:var(--w);background:linear-gradient(90deg,#5b9cff40,#9d7bff40);animation:gr 1s cubic-bezier(.2,.8,.2,1)}
+@keyframes gr{from{width:0}}
+.opt span,.opt b{position:relative}.opt.mine{border-color:var(--g)}.opt.mine span::after{content:" ✓";color:var(--g)}
+nav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(10px + env(safe-area-inset-bottom,0px));width:min(560px,calc(100% - 20px));display:flex;gap:2px;padding:6px;border-radius:24px;background:#12141ce6;border:1px solid var(--ln);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 10px 40px #000a;z-index:9}
+nav button{flex:1;border:0;background:none;color:var(--m);font:inherit;font-size:10.5px;padding:8px 0 6px;border-radius:18px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:.25s}
+nav button span{font-size:20px;transition:.25s}
+nav button.on{color:#fff;background:linear-gradient(135deg,#5b9cff33,#9d7bff33)}nav button.on span{transform:translateY(-2px) scale(1.15)}
+.modal{position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:#000a;animation:up .3s both}
+.mc{background:var(--c2);border:1px solid var(--ln);border-radius:22px;padding:20px;width:min(320px,90%);display:grid;gap:12px}
+.sheet{position:fixed;inset:0;z-index:30;background:var(--bg);display:flex;flex-direction:column;padding:calc(12px + env(safe-area-inset-top,0px)) 14px calc(12px + env(safe-area-inset-bottom,0px));max-width:720px;margin:0 auto;animation:up .35s both}
+.sh{display:flex;justify-content:space-between;align-items:center;font-size:20px;margin-bottom:8px}.body{flex:1;overflow-y:auto;padding-bottom:12px}
+input{width:100%;min-width:0;background:var(--c);border:1px solid var(--ln);border-radius:12px;color:var(--t);padding:11px;font:inherit;outline:0}input:focus{border-color:var(--a)}
+.row{display:flex;gap:6px;margin:6px 0}
+button.x{border:0;background:#ff5b6a22;color:#ff6b78;border-radius:12px;width:42px;flex:none;font-size:16px;cursor:pointer}
+button.add,button.save,.mc button{border:0;border-radius:14px;padding:12px;font:inherit;font-weight:700;color:#fff;cursor:pointer;background:linear-gradient(135deg,var(--a),var(--b))}
+button.add{background:var(--c2);color:var(--a);width:100%;margin:4px 0 8px;border:1px dashed var(--ln)}
+.toast{position:fixed;top:calc(16px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);background:var(--g);color:#06140e;padding:10px 18px;border-radius:14px;font-weight:700;z-index:99;animation:up .3s both}
+.shake{animation:sh .35s}@keyframes sh{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.ic{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;flex:none;color:hsl(var(--h) 90% 72%);background:hsl(var(--h) 80% 60%/.15)}
+svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+nav svg.i{width:24px;height:24px}
+.bk{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
+.bk a{margin:0;padding:0;overflow:hidden;color:inherit;text-decoration:none;display:block;transition:.2s}.bk a:active{transform:scale(.97)}
+.bk .cv{aspect-ratio:3/4;background:linear-gradient(135deg,#5b9cff33,#9d7bff33);display:grid;place-items:center;color:var(--a)}
+.bk .cv svg.i{width:40px;height:40px}.bk b{display:block;padding:10px;font-size:14px}
+.bk img,.av img,.ph img{width:100%;height:100%;object-fit:cover}.av{overflow:hidden}
+.ph{width:42px;height:42px;border-radius:12px;background:var(--c);border:1px dashed var(--ln);display:grid;place-items:center;flex:none;overflow:hidden;color:var(--m);cursor:pointer}
+.row{flex-wrap:wrap}.row input{flex:1 1 90px}
+@media(min-width:700px){#app{padding-top:10px}h2{font-size:32px}.cdn{font-size:110px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app"></div><div id="adm"></div>
+<script id="d" type="application/json">{"v":0,"cls":"10-А клас","hol":{"n":"Зимові канікули","d":"2026-12-26T00:00"},
+"bells":[{"a":"08:30","b":"09:15"},{"a":"09:25","b":"10:10"},{"a":"10:20","b":"11:05"},{"a":"11:25","b":"12:10"},{"a":"12:30","b":"13:15"},{"a":"13:25","b":"14:10"},{"a":"14:20","b":"15:05"}],
+"schedule":[
+[{"s":"Українська мова","r":"201"},{"s":"Математика","r":"305"},{"s":"Історія України","r":"112"},{"s":"Англійська мова","r":"208"},{"s":"Фізкультура","r":"зал"}],
+[{"s":"Математика","r":"305"},{"s":"Фізика","r":"314"},{"s":"Біологія","r":"210"},{"s":"Інформатика","r":"401"},{"s":"Українська література","r":"201"},{"s":"Англійська мова","r":"208"}],
+[{"s":"Хімія","r":"216"},{"s":"Математика","r":"305"},{"s":"Географія","r":"118"},{"s":"Українська мова","r":"201"},{"s":"Фізкультура","r":"зал"}],
+[{"s":"Фізика","r":"314"},{"s":"Інформатика","r":"401"},{"s":"Історія України","r":"112"},{"s":"Зарубіжна література","r":"203"},{"s":"Математика","r":"305"},{"s":"Біологія","r":"210"}],
+[{"s":"Англійська мова","r":"208"},{"s":"Хімія","r":"216"},{"s":"Українська література","r":"201"},{"s":"Географія","r":"118"}]],
+"teachers":[{"n":"Коваленко Олена Петрівна","s":"Українська мова","r":"201"},{"n":"Шевченко Андрій Іванович","s":"Математика","r":"305"},{"n":"Мельник Ірина Василівна","s":"Англійська мова","r":"208"},{"n":"Бойко Максим Олегович","s":"Фізкультура","r":"зал"}],
+"books":[{"t":"Математика, 10 клас","u":"https://pidruchnyk.com.ua","p":""},{"t":"Історія України","u":"https://pidruchnyk.com.ua","p":""}],"files":[{"t":"Приклад файлу (заміни в адмінці)","u":"https://drive.google.com"}],
+"poll":{"id":"1","q":"Куди їдемо на екскурсію?","opts":["Львів","Карпати","Одеса","Нікуди, лишаємось"]}}</script>
+<script>
+const $=s=>document.querySelector(s),e=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let D=JSON.parse($('#d').textContent);
+try{const l=JSON.parse(localStorage.getItem('cls')||'null');if(l&&l.v>(D.v||0))D=l}catch(_){}
+D.books=D.books||[];D.files=D.files||[];
+const TB=[['sch','cal','Розклад'],['bel','bell','Дзвінки'],['tea','usr','Вчителі'],['lnk','book','Матеріали'],['hol','sun','Канікули'],['vot','bar','Голосування']];
+const DN=['Понеділок','Вівторок','Середа','Четвер','П’ятниця'],DS=['Пн','Вт','Ср','Чт','Пт'];
+let tab='sch',day=(()=>{const g=new Date().getDay();return g>0&&g<6?g-1:0})(),VT=[],live=0,uid=null,adm=0,at='sch',tc=0,tt;
+const mm=s=>{const[a,b]=(s||'0:0').split(':');return+a*60+ +b},pad=n=>String(n).padStart(2,'0');
+const tch=s=>(D.teachers.find(t=>t.s===s)||{}).n||'';
+const hue=s=>[...s].reduce((a,c)=>a+c.charCodeAt(0),0)*37%360;
+const P={cal:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',usr:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/><circle cx="9" cy="7" r="4"/>',book:'<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"/>',bar:'<path d="M12 20V10M18 20V4M6 20v-4"/>',sig:'<path d="M18 7V5H6l6 7-6 7h12v-2"/>',land:'<path d="M3 22h18M6 18v-7M10 18v-7M14 18v-7M18 18v-7M12 2l8 5H4z"/>',glb:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/>',atom:'<circle cx="12" cy="12" r="1"/><path d="M20.2 20.2c2-2 0-7.4-4.5-11.9S5.8 1.8 3.8 3.8s0 7.4 4.5 11.9 9.9 6.5 11.9 4.5zM15.7 15.7c4.5-4.5 6.5-9.9 4.5-11.9s-7.4 0-11.9 4.5-6.5 9.9-4.5 11.9 7.4 0 11.9-4.5z"/>',leaf:'<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10zM2 21c0-3 1.9-5.4 5.1-6C9.5 14.5 12 13 13 12"/>',flask:'<path d="M10 2v7.5a2 2 0 0 1-.2.9L4.7 20.5a1 1 0 0 0 .9 1.5h12.8a1 1 0 0 0 .9-1.5l-5.1-10.1a2 2 0 0 1-.2-.9V2M8.5 2h7M7 16h10"/>',map:'<path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3zM9 3v15M15 6v15"/>',mon:'<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>',gym:'<path d="M6.5 6.5v11M17.5 6.5v11M3 9v6M21 9v6M6.5 12h11"/>',file:'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7zM14 2v4a2 2 0 0 0 2 2h4"/>',dwn:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>',cam:'<path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z"/><circle cx="12" cy="13" r="3"/>'};
+const ico=n=>`<svg class="i" viewBox="0 0 24 24">${P[n]||''}</svg>`;
+const SI=[[/матем|алгебр|геометр/,'sig',215],[/істор|право|громад/,'land',35],[/англ|нім|франц|іноз/,'glb',190],[/укр|літ|мов|читан/,'book',265],[/фізик/,'atom',230],[/біол|природ/,'leaf',140],[/хім/,'flask',320],[/геогр/,'map',165],[/інформ|комп/,'mon',200],[/фізк|спорт|тілов/,'gym',10]];
+const sic=s=>{s=(s||'').toLowerCase();return SI.find(x=>x[0].test(s))||[0,'book',220]};
+
+function R(){
+ $('#app').innerHTML=`<header><div><div class=cl>${e(D.cls)}</div><div id=st></div></div><div class=clk id=clk></div></header><main id=v></main><nav>${TB.map(([k,i,n])=>`<button class="${k==tab?'on':''}" onclick="tab='${k}';R()"><span>${ico(i)}</span>${n}</button>`).join('')}</nav>`;
+ V();tick();
+}
+function V(){const f={sch:vSch,bel:vBel,tea:vTea,lnk:vLnk,hol:vHol,vot:vVot}[tab];const v=$('#v');if(!v)return;v.innerHTML=f();v.className='';void v.offsetWidth;v.className='in';tick()}
+function vSch(){
+ const L=D.schedule[day]||[],n=new Date(),m=n.getHours()*60+n.getMinutes(),td=day===(n.getDay()+6)%7;
+ return `<h2 onclick="tap()" style="user-select:none">Розклад уроків</h2><div class=mut>${DN[day]}</div><div class=pills>${DS.map((d,i)=>`<button class="pill ${i==day?'on':''}" onclick="day=${i};V()">${d}</button>`).join('')}</div>`+
+ (L.length?L.map((x,i)=>{const b=D.bells[i]||{a:'',b:''},cur=td&&b.a&&m>=mm(b.a)&&m<mm(b.b),[,ik,h]=sic(x.s);return `<div class="card les ${cur?'cur':''}" style="--i:${i}"><b class=num>${i+1}</b><div><div class=sb>${e(x.s)}</div><small>${e(tch(x.s))}</small></div><div class=rt><span class=room>${x.r?'каб. '+e(x.r):''}</span><small>${e(b.a)}${b.a?'–':''}${e(b.b)}</small></div><div class=ic style="--h:${h}">${ico(ik)}</div></div>`}).join(''):'<p class=mut>Уроків немає 🎉</p>');
+}
+function vBel(){
+ const n=new Date(),m=n.getHours()*60+n.getMinutes();
+ return `<h2>Розклад дзвінків</h2><div class=mut>Тривалість перерв рахується автоматично</div>`+D.bells.map((b,i)=>{const cur=m>=mm(b.a)&&m<mm(b.b),nx=D.bells[i+1],br=nx?mm(nx.a)-mm(b.b):0;return `<div class="card les ${cur?'cur':''}" style="--i:${i}"><b class=num>${i+1}</b><div class=sb>${e(b.a)} – ${e(b.b)}</div><div class=rt><small>${nx?'перерва '+br+' хв':'кінець'}</small></div></div>`}).join('');
+}
+function vTea(){
+ return `<h2>Вчителі</h2><div class=mut>Хто що веде і де шукати</div>`+D.teachers.map((t,i)=>{const h=hue(t.n);return `<div class="card les" style="--i:${i}"><div class=av style="background:linear-gradient(135deg,hsl(${h} 80% 55%),hsl(${h+50} 80% 45%))">${t.p?`<img src="${e(t.p)}" alt="">`:e((t.n||'?').trim()[0])}</div><div><div class=sb>${e(t.n)}</div><small>${e(t.s)}</small></div><div class=rt><span class=room>${t.r?'каб. '+e(t.r):''}</span></div></div>`}).join('');
+}
+const dl=u=>{const m=/drive\.google\.com\/file\/d\/([^/?#]+)/.exec(u||'');return m?'https://drive.google.com/uc?export=download&id='+m[1]:u};
+const ok=u=>/^https?:/.test(u||'')?e(u):'#';
+function vLnk(){
+ return `<h2>Матеріали</h2><div class=mut>Підручники відкриваються, файли завантажуються</div><h3>Підручники</h3><div class=bk>${D.books.map((b,i)=>`<a class=card style="--i:${i}" target=_blank rel=noopener href="${ok(b.u)}"><div class=cv>${b.p?`<img src="${e(b.p)}" alt="">`:ico('book')}</div><b>${e(b.t)}</b></a>`).join('')||'<p class=mut>Поки порожньо</p>'}</div><h3>Файли</h3>${D.files.map((f,i)=>`<a class="card lk" style="--i:${i}" download target=_blank rel=noopener href="${ok(dl(f.u))}"><div class=ic style="--h:160">${ico('file')}</div><b>${e(f.t)}</b><span class=ar>${ico('dwn')}</span></a>`).join('')||'<p class=mut>Поки порожньо</p>'}`;
+}
+function vHol(){
+ return `<h2>${e(D.hol.n)}</h2><div class=mut>Просто для настрою 😄</div><div class="card big"><div class=cdn id=cdd>0</div><div class=mut style="margin:6px 0 0">днів залишилось</div></div><div class=g4>${[['h','годин'],['m','хвилин'],['s','секунд']].map(([k,l],i)=>`<div class="card sm" style="--i:${i+1}"><b id=cd${k}>00</b><small>${l}</small></div>`).join('')}</div><p class=mut id=cdt style="text-align:center;font-size:16px"></p>`;
+}
+function cnt(){const p=D.poll,c=Array(p.opts.length).fill(0);if(live)VT.forEach(d=>{if(d&&d.p==p.id&&c[d.o]!==undefined)c[d.o]++});else{const my=localStorage.getItem('mv'+p.id);if(my!==null&&c[my]!==undefined)c[my]++}return c}
+function vVot(){
+ const p=D.poll,my=localStorage.getItem('mv'+p.id),c=cnt(),tot=c.reduce((a,b)=>a+b,0);
+ return `<h2>${e(p.q)}</h2><div class=mut>Натисни на варіант, щоб проголосувати. Можна змінити вибір.</div>`+p.opts.map((o,i)=>{const pc=tot?Math.round(c[i]/tot*100):0;return `<button class="card opt ${my==i?'mine':''}" style="--i:${i}" onclick="vote(${i})"><i style="--w:${pc}%"></i><span>${e(o)}</span><b>${pc}%</b></button>`}).join('')+`<p class=mut>Голосів: ${tot}${live?'':' · поки що лише на цьому пристрої'}</p>`;
+}
+function vote(i){const p=D.poll;localStorage.setItem('mv'+p.id,i);if(live&&uid){window._db.collection('votes').doc(uid).set({p:p.id,o:i}).catch(()=>{})}V()}
+function stat(){
+ const n=new Date(),w=(n.getDay()+6)%7,m=n.getHours()*60+n.getMinutes();if(w>4)return'Вихідні 😴';
+ const L=D.schedule[w]||[];let nx=null;
+ for(let i=0;i<L.length;i++){const b=D.bells[i];if(!b||!b.a)continue;if(m>=mm(b.a)&&m<mm(b.b))return`${i+1} урок · ${L[i].s} · ще ${mm(b.b)-m} хв`;if(m<mm(b.a)&&!nx)nx=[i,mm(b.a)-m]}
+ return nx?`Перерва · далі ${L[nx[0]].s} за ${nx[1]} хв`:'Уроки на сьогодні закінчились';
+}
+function tick(){
+ const n=new Date(),s=$('#st');if(s)s.textContent=stat();const k=$('#clk');if(k)k.textContent=pad(n.getHours())+':'+pad(n.getMinutes());
+ if(!$('#cdd'))return;const df=new Date(D.hol.d)-n;
+ if(df<=0){$('#cdd').textContent='0';$('#cdt').textContent='Канікули почались! 🥳';return}
+ const d=Math.floor(df/864e5);$('#cdd').textContent=d;$('#cdh').textContent=pad(Math.floor(df%864e5/36e5));$('#cdm').textContent=pad(Math.floor(df%36e5/6e4));$('#cds').textContent=pad(Math.floor(df%6e4/1e3));
+ $('#cdt').textContent=d>60?'Ще далеко 😅':d>14?'Тримаємось 💪':d>3?'Вже зовсім скоро 👀':'ВЖЕ ВОНО!!! 🔥';
+}
+setInterval(tick,1000);
+
+/* адмінка */
+function tap(){clearTimeout(tt);if(++tc>=10){tc=0;ask()}tt=setTimeout(()=>tc=0,2500)}
+function ask(){$('#adm').innerHTML=`<div class=modal onclick="if(event.target==this)$('#adm').innerHTML=''"><div class=mc><b>🔐 Вхід в адмінку</b><input id=pw type=password placeholder="Пароль" onkeydown="if(event.key=='Enter')chk()"><button onclick="chk()">Увійти</button></div></div>`;setTimeout(()=>$('#pw').focus(),50)}
+function chk(){if($('#pw').value==='admin123'){adm=1;A()}else{const m=$('.mc');m.classList.remove('shake');void m.offsetWidth;m.classList.add('shake');$('#pw').value=''}}
+const get=p=>p.split('.').reduce((o,k)=>o[k],D);
+function setp(p,v){const k=p.split('.'),l=k.pop();k.reduce((o,x)=>o[x],D)[l]=v}
+const blank=p=>p.startsWith('schedule')?{s:'',r:''}:{bells:{a:'',b:''},teachers:{n:'',s:'',r:'',p:''},books:{t:'',u:'',p:''},files:{t:'',u:''}}[p];
+function rows(p,f,ph){return get(p).map((r,i)=>`<div class=row>${ph?`<label class=ph>${r.p?`<img src="${e(r.p)}" alt="">`:ico('cam')}<input type=file accept="image/*" hidden onchange="pic(this,'${p}.${i}.p')"></label>`:''}${f.map(([k,ph,t])=>`<input data-p="${p}.${i}.${k}" type="${t||'text'}" placeholder="${ph}" value="${e(r[k])}">`).join('')}<button class=x onclick="del('${p}',${i})">✕</button></div>`).join('')+`<button class=add onclick="add('${p}')">+ Додати</button>`}
+function pic(i,p){const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const m=new Image();m.onload=()=>{const k=Math.min(1,260/Math.max(m.width,m.height)),c=document.createElement('canvas');c.width=m.width*k;c.height=m.height*k;c.getContext('2d').drawImage(m,0,0,c.width,c.height);setp(p,c.toDataURL('image/jpeg',.78));A();R()};m.src=r.result};r.readAsDataURL(f)}
+function add(p){get(p).push(blank(p));A();R()}
+function del(p,i){get(p).splice(i,1);A();R()}
+function AB(){
+ if(at=='sch')return DN.map((d,i)=>`<h3>${d}</h3>`+rows('schedule.'+i,[['s','Предмет'],['r','Каб.']])).join('');
+ if(at=='bel')return rows('bells',[['a','Початок','time'],['b','Кінець','time']]);
+ if(at=='tea')return rows('teachers',[['n','Прізвище та ім’я'],['s','Предмет'],['r','Каб.']],1);
+ if(at=='bk')return rows('books',[['t','Назва підручника'],['u','Посилання https://…']],1);
+ if(at=='fl')return rows('files',[['t','Назва файлу'],['u','Посилання на файл']]);
+ return `<h3>Клас</h3><input data-p="cls" value="${e(D.cls)}"><h3>Канікули</h3><div class=row><input data-p="hol.n" value="${e(D.hol.n)}"></div><div class=row><input data-p="hol.d" type="datetime-local" value="${e(D.hol.d)}"></div><h3>Голосування</h3><div class=row><input data-p="poll.q" value="${e(D.poll.q)}"></div>${D.poll.opts.map((o,i)=>`<div class=row><input data-p="poll.opts.${i}" value="${e(o)}"><button class=x onclick="del('poll.opts',${i})">✕</button></div>`).join('')}<button class=add onclick="D.poll.opts.push('');A();R()">+ Варіант</button><button class=add onclick="D.poll.id=String(Date.now());VT=[];A();R();toast('Нове голосування — голоси обнулено')">🔄 Нове голосування (обнулити голоси)</button>`;
+}
+function A(){const t=[['sch','Розклад'],['bel','Дзвінки'],['tea','Вчителі'],['bk','Книги'],['fl','Файли'],['oth','Інше']];
+ $('#adm').innerHTML=adm?`<div class=sheet><div class=sh><b>⚙️ Адмінка</b><button class=x onclick="adm=0;A()">✕</button></div><div class=pills>${t.map(([k,n])=>`<button class="pill ${k==at?'on':''}" onclick="at='${k}';A()">${n}</button>`).join('')}</div><div class=body>${AB()}</div><button class=save onclick="save()">Зберегти й опублікувати</button></div>`:''}
+document.addEventListener('input',ev=>{const p=ev.target.dataset&&ev.target.dataset.p;if(p){setp(p,ev.target.value);if(!adm)return;clearTimeout(window._rt);window._rt=setTimeout(R,300)}});
+function toast(t){const x=document.createElement('div');x.className='toast';x.textContent=t;document.body.append(x);setTimeout(()=>x.remove(),2800)}
+async function save(){
+ D.v=Date.now();let ok=0;try{localStorage.setItem('cls',JSON.stringify(D))}catch(_){}
+ try{const a=await claude.use('artifact');if(a){const c=document.documentElement.cloneNode(true);c.querySelector('#app').innerHTML='';c.querySelector('#adm').innerHTML='';c.querySelector('#d').textContent=JSON.stringify(D).replace(/</g,'\\u003c');await a.publish('<!doctype html>\n'+c.outerHTML);ok=1}}catch(_){}
+ toast(ok?'Опубліковано ✓':'Збережено лише на цьому пристрої');
+}
+R();
+(async()=>{try{if(!window.claude)return;const u=await claude.use('user'),db=await claude.use('db');if(u&&db){uid=await u.id();window._db=db;db.collection('votes').onSnapshot(s=>{VT=s.docs.map(d=>d.data());live=1;if(tab=='vot'&&!adm)V()})}}catch(_){}})();
+</script>
+</body>
+</html>
