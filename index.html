@@ -10,8 +10,10 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;min-height:100%;background:var(--bg);color:var(--t);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background-image:radial-gradient(600px 400px at 10% -5%,#5b9cff26,transparent),radial-gradient(500px 400px at 100% 10%,#9d7bff22,transparent);background-attachment:fixed}
-#app{max-width:640px;margin:0 auto;padding:0 14px calc(104px + env(safe-area-inset-bottom,0px))}
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 4px;margin:0 -4px;background:#07080cb8;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+#app{max-width:640px;margin:0 auto;padding:0 14px calc(92px + env(safe-area-inset-bottom,0px)*.3)}
+header{position:sticky;top:0;z-index:5;isolation:isolate;display:flex;justify-content:space-between;align-items:center;gap:12px;margin:calc(-1*env(safe-area-inset-top,0px)) 0 0;padding:calc(env(safe-area-inset-top,0px) + 12px) 4px 16px}
+header::before{content:"";position:absolute;z-index:-1;top:0;bottom:0;left:calc(50% - 50vw);right:calc(50% - 50vw);background:linear-gradient(#07080cf2 62%,#07080c00)}
+body{overflow-x:clip}
 .cl{font-weight:800;font-size:20px;background:linear-gradient(90deg,var(--a),var(--b));-webkit-background-clip:text;background-clip:text;color:transparent}
 #st{font-size:13px;color:var(--m);margin-top:2px}
 .clk{font-variant-numeric:tabular-nums;font-weight:700;font-size:18px;padding:6px 12px;border-radius:12px;background:var(--c);border:1px solid var(--ln)}
@@ -40,8 +42,8 @@ h2{margin:14px 0 4px;font-size:26px;letter-spacing:-.5px}h3{margin:18px 0 8px;co
 .opt i{position:absolute;left:0;top:0;bottom:0;width:var(--w);background:linear-gradient(90deg,#5b9cff40,#9d7bff40);animation:gr 1s cubic-bezier(.2,.8,.2,1)}
 @keyframes gr{from{width:0}}
 .opt span,.opt b{position:relative}.opt.mine{border-color:var(--g)}.opt.mine span::after{content:" ✓";color:var(--g)}
-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(10px + env(safe-area-inset-bottom,0px));width:min(560px,calc(100% - 20px));display:flex;gap:2px;padding:6px;border-radius:24px;background:#12141ce6;border:1px solid var(--ln);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 10px 40px #000a;z-index:9}
-nav button{flex:1;border:0;background:none;color:var(--m);font:inherit;font-size:10px;padding:8px 0 6px;border-radius:18px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:.25s}
+nav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(8px + env(safe-area-inset-bottom,0px)*.3);width:min(560px,calc(100% - 20px));display:flex;gap:2px;padding:6px;border-radius:24px;background:#12141ce6;border:1px solid var(--ln);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 10px 40px #000a;z-index:9}
+nav button{flex:1;border:0;background:none;color:var(--m);font:inherit;font-size:10px;padding:6px 0 5px;border-radius:18px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;transition:.25s}
 nav button span{font-size:20px;transition:.25s}
 nav button.on{color:#fff;background:linear-gradient(135deg,#5b9cff33,#9d7bff33)}nav button.on span{transform:translateY(-2px) scale(1.15)}
 .modal{position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:#000a;animation:up .3s both}
@@ -57,7 +59,7 @@ button.add{background:var(--c2);color:var(--a);width:100%;margin:4px 0 8px;borde
 .shake{animation:sh .35s}@keyframes sh{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 .ic{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;flex:none;color:hsl(var(--h) 90% 72%);background:hsl(var(--h) 80% 60%/.15)}
 svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-nav svg.i{width:24px;height:24px}
+nav svg.i{width:22px;height:22px}
 .bk{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px}
 .bk a{margin:0;padding:0;overflow:hidden;color:inherit;text-decoration:none;display:block;transition:.2s}.bk a:active{transform:scale(.97)}
 .bk .cv{aspect-ratio:3/4;background:linear-gradient(135deg,#5b9cff33,#9d7bff33);display:grid;place-items:center;color:var(--a)}
@@ -193,6 +195,11 @@ const inCat=x=>CAT.some(c=>c[1].includes(x));
 function pc(p){const n=$('#cs').value.trim()||(pm?'':get(p));if(!n)return;if(pI){D.ic=D.ic||{};D.ic[n]=pI}pv(p,n)}
 const MS=(p,i,k,r)=>`<div class=subs>${r[k].map((v,j)=>{const c=sic(v);return `<span class=chip style="--h:${c[2]}">${ico(c[1])}${e(v)}<b onclick="rmS('${p}.${i}.${k}',${j})">×</b></span>`}).join('')}<button class=chip onclick="pk('${p}.${i}.${k}',1)">+ Предмет</button></div>`;
 function rmS(p,j){get(p).splice(j,1);A();R()}
+function orph(L){
+ const ob=Object.keys(D.hw).filter(k=>k.startsWith(hdt+'|')&&!L.some(x=>hdt+'|'+x.s==k)),all=Object.keys(D.hw).length;
+ return (ob.length?`<h3>Записи без уроку в цей день</h3><div class=mut>Лишились після зміни розкладу — можна видалити</div>`+ob.map(k=>`<div class=row><div class=pk style="cursor:default"><span><b>${e(k.split('|')[1])}</b><br><small>${e(D.hw[k])}</small></span></div><button class=x data-k="${e(k)}" onclick="hwx(this.dataset.k)">✕</button></div>`).join(''):'')+(all?`<button class=add style="margin-top:14px" onclick="if(confirm('Видалити ВСЕ домашнє завдання?')){D.hw={};A();R()}">Очистити всі ДЗ (${all})</button>`:'');
+}
+function hwx(k){delete D.hw[k];A();R()}
 function hdd(n){const d=new Date(hdt+'T00:00');do d.setDate(d.getDate()+n);while(d.getDay()%6==0);hdt=iso(d);A()}
 function hws(el){const v=el.value.trim(),k=el.dataset.k;if(v)D.hw[k]=v;else delete D.hw[k];clearTimeout(window._rt);window._rt=setTimeout(R,400)}
 function pruneHw(){const t=new Date();t.setDate(t.getDate()-3);const c=iso(t);Object.keys(D.hw).forEach(k=>{if(k.split('|')[0]<c)delete D.hw[k]})}
@@ -200,7 +207,7 @@ function add(p){get(p).push(blank(p));A();R()}
 function del(p,i){get(p).splice(i,1);A();R()}
 function AB(){
  if(at=='hw'){const d=new Date(hdt+'T00:00'),w=(d.getDay()+6)%7,L=D.schedule[w]||[];
-  return `<div class=mut>Обери день і впиши, що задали. Порожнє поле — ДЗ немає.</div><div class=pills><button class=pill onclick="hdd(-1)">‹</button><button class="pill on" style="flex:4">${WD[w]}, ${fd(d)}</button><button class=pill onclick="hdd(1)">›</button></div>`+(L.length?L.map(x=>{const[,ik,h]=sic(x.s);return `<div class=hwr><div class=pk style="cursor:default"><span class=ic style="--h:${h}">${ico(ik)}</span>${e(x.s)}</div><input data-k="${e(hdt+'|'+x.s)}" placeholder="Що задали…" value="${e(D.hw[hdt+'|'+x.s]||'')}" oninput="hws(this)"></div>`}).join(''):'<p class=mut>У цей день уроків немає</p>')}
+  return `<div class=mut>Обери день і впиши, що задали. Порожнє поле — ДЗ немає.</div><div class=pills><button class=pill onclick="hdd(-1)">‹</button><button class="pill on" style="flex:4">${WD[w]}, ${fd(d)}</button><button class=pill onclick="hdd(1)">›</button></div>`+(L.length?L.map(x=>{const[,ik,h]=sic(x.s);return `<div class=hwr><div class=pk style="cursor:default"><span class=ic style="--h:${h}">${ico(ik)}</span>${e(x.s)}</div><div class=row><input data-k="${e(hdt+'|'+x.s)}" placeholder="Що задали…" value="${e(D.hw[hdt+'|'+x.s]||'')}" oninput="hws(this)"><button class=x data-k="${e(hdt+'|'+x.s)}" onclick="hwx(this.dataset.k)">✕</button></div></div>`}).join(''):'<p class=mut>У цей день уроків немає</p>')+orph(L)}
  if(at=='sch')return DN.map((d,i)=>`<h3>${d}</h3>`+rows('schedule.'+i,[['s','Обрати предмет','pick'],['r','Каб.']])).join('');
  if(at=='bel')return rows('bells',[['a','Початок','time'],['b','Кінець','time']]);
  if(at=='tea')return rows('teachers',[['n','Прізвище та ім’я'],['s','Предмети','multi'],['r','Каб.']],1);
