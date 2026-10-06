@@ -105,17 +105,19 @@ textarea{width:100%;background:var(--c);border:1px solid var(--ln);border-radius
 .an{display:flex;gap:10px;align-items:flex-start;margin:6px 0;padding:11px 14px;border-radius:16px;background:linear-gradient(135deg,#ff5b6a2e,#ffb84d26);border:1px solid #ff7a6a55;color:#ffd9d4;font-size:14px;line-height:1.35;animation:up .5s both}.an svg.i{flex:none;width:20px;height:20px;color:#ff8a7a;margin-top:1px}
 .jn{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:8px 13px;border-radius:12px;background:linear-gradient(135deg,var(--a),var(--b));color:#fff;text-decoration:none;font-size:13px;font-weight:700}.jn svg.i{width:16px;height:16px}
 .bd.o{background:#3ddc9726;color:#5ff0b0}.bd.m{background:#5b9cff26;color:#8cbcff}.chip.ol{background:#3ddc9726;color:#5ff0b0;border:1px solid #3ddc9755}
-.mapc{overflow:auto;border-radius:20px;background:#0c0e15;border:1px solid var(--ln);margin:6px 0;-webkit-overflow-scrolling:touch}
-.mapw{border-radius:20px;background:#0c0e15;border:1px solid var(--ln);margin:6px 0;padding:4px}
-#msv{display:block}#msv text{text-anchor:middle;dominant-baseline:middle;pointer-events:none;fill:var(--t)}
-.rm{cursor:pointer}.rm rect{fill:var(--c2);stroke:#ffffff26;stroke-width:2;transition:.25s}
-.rm.hv rect{fill:hsl(var(--h) 50% 21%);stroke:hsl(var(--h) 70% 55%/.5)}.rm.mine rect{stroke:hsl(var(--h) 85% 62%);stroke-width:3}
-.rm.st rect{fill:#151822;stroke-dasharray:6 5}.rm.xx rect{fill:#0f1119;stroke:#ffffff14}
-.rm.now rect{stroke:var(--g);stroke-width:4;animation:pu 1.6s infinite}.rm.nxt rect{stroke:var(--a);stroke-width:3;stroke-dasharray:8 5}
-.rm.mt rect{stroke:#ffd166;stroke-width:4;fill:#ffd16638}.rm.sel rect{stroke:#fff;stroke-width:3;stroke-dasharray:none}
+.mapc,.mapw{position:relative;height:min(62vh,540px);border-radius:20px;overflow:hidden;background:radial-gradient(circle at 50% 40%,#12161f,#0a0c12);border:1px solid var(--ln);margin:8px 0;touch-action:none}
+.mapw{height:min(46vh,380px)}
+svg.msv{width:100%;height:100%;display:block;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}svg.msv:active{cursor:grabbing}
+.vg{transform-origin:0 0}.vg.an{transition:transform .55s cubic-bezier(.2,.8,.2,1)}
+.msv text{text-anchor:middle;dominant-baseline:middle;pointer-events:none;fill:var(--t);font-family:inherit}
+.bo{fill:#0e121a;stroke:#566082;stroke-width:7}.cor{fill:#171d2c}.msv .mct{font-size:26px;letter-spacing:.5em;fill:#ffffff12;font-weight:800}
+.rm{cursor:pointer}.rm .fl{fill:#1b2132;stroke:#4a5470;stroke-width:4;transition:fill .25s}.dr{fill:#171d2c}
+.rm.hv .fl{fill:hsl(var(--h) 45% 20%);stroke:hsl(var(--h) 60% 50%)}.rm.mine .fl{stroke:hsl(var(--h) 90% 65%);stroke-width:6}
+.rm.h .fl{fill:#222a44}.rm.xx .fl{fill:#12151e;stroke:#3b4358}.stl{stroke:#ffffff26;stroke-width:2}
+.rm.now .fl{stroke:var(--g);stroke-width:8;animation:pu 1.6s infinite}.rm.nxt .fl{stroke:var(--a);stroke-width:6;stroke-dasharray:14 8}
+.rm.mt .fl{stroke:#ffd166;stroke-width:8;fill:#ffd16640}.rm.sel .fl{stroke:#fff;stroke-width:6}
 @keyframes pu{50%{stroke-opacity:.3}}
-#msv .rn{font-weight:800;font-size:22px}#msv .rs{font-size:12px;font-weight:600;fill:var(--m)}#msv .mct{font-size:20px;letter-spacing:.4em;fill:#ffffff16;font-weight:800}.mco{fill:#ffffff06}
-#msv.ed{touch-action:none}
+.msv .rn{font-weight:800}.msv .rs{font-size:13px;font-weight:600;fill:var(--m);opacity:0;transition:opacity .25s}.msv.zi .rs{opacity:1}
 .mtl{display:flex;gap:8px;align-items:center}.mtl input{flex:1}.mtl button{width:42px;height:42px;border-radius:12px;border:1px solid var(--ln);background:var(--c);color:var(--t);font-size:20px;cursor:pointer;flex:none}
 .insc{max-height:84vh;overflow-y:auto}
 .rmh{display:flex;gap:14px;align-items:center}.rbig{font-size:34px;font-weight:900;background:linear-gradient(135deg,var(--a),var(--b));-webkit-background-clip:text;background-clip:text;color:transparent;min-width:64px}
@@ -143,7 +145,7 @@ button.jn{border:0;font:inherit;font-size:13px;font-weight:700;cursor:pointer;ma
 const $=s=>document.querySelector(s),e=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let D=JSON.parse($('#d').textContent);
 try{const l=JSON.parse(localStorage.getItem('cls')||'null');if(l&&l.v>(D.v||0))D=l}catch(_){}
-const NORM=()=>{D.books=D.books||[];D.files=D.files||[];D.hw=D.hw||{};D.ic=D.ic||{};D.ex=D.ex||[];D.sub=D.sub||{};D.ov=D.ov||{};D.an=D.an||[];if(!D.maps||!D.maps.length)D.maps=defMaps();D.teachers.forEach(t=>{if(!Array.isArray(t.s))t.s=t.s?[t.s]:[]})};NORM();
+const NORM=()=>{D.books=D.books||[];D.files=D.files||[];D.hw=D.hw||{};D.ic=D.ic||{};D.ex=D.ex||[];D.sub=D.sub||{};D.ov=D.ov||{};D.an=D.an||[];if(!D.fl||!D.fl.length)D.fl=defFloors();D.teachers.forEach(t=>{if(!Array.isArray(t.s))t.s=t.s?[t.s]:[]})};NORM();
 let G={};try{G=JSON.parse(localStorage.getItem('gh')||'{}')}catch(_){}
 const gh=(k,v)=>{G[k]=v.trim();localStorage.setItem('gh',JSON.stringify(G))};
 const dev=(()=>{let d=localStorage.getItem('dev');if(!d){d=Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('dev',d)}return d})();
@@ -169,7 +171,7 @@ function R(){if(tab=='vot'&&D.poll.on===false)tab='sch';
  $('#app').innerHTML=`<header><div><div class=cl>${e(D.cls)}</div><div id=st></div></div><div class=hr>${IB()?`<button class=ibt onclick="inb()">${ico('msg')}</button>`:''}<div class=clk id=clk></div></div></header><div id=anw>${ANN()}</div><main id=v></main><nav>${TB.filter(x=>x[0]!='vot'||D.poll.on!==false).map(([k,i,n])=>`<button class="${k==tab?'on':''}" onclick="tab='${k}';R()"><span>${ico(i)}</span>${n}</button>`).join('')}</nav>`;
  V();tick();if(tab=='vot')fbLoad();
 }
-function V(){const f={sch:vSch,hw:vHw,bel:vBel,tea:vTea,lnk:vLnk,hol:vHol,vot:vVot}[tab];const v=$('#v');if(!v)return;v.innerHTML=f();v.className='';void v.offsetWidth;v.className='in';tick()}
+function V(){const f={sch:vSch,hw:vHw,bel:vBel,tea:vTea,lnk:vLnk,hol:vHol,vot:vVot}[tab];const v=$('#v');if(!v)return;v.innerHTML=f();v.className='';void v.offsetWidth;v.className='in';tick();mapInit()}
 function vSch(){
  const L=D.schedule[day]||[],n=new Date(),m=n.getHours()*60+n.getMinutes(),td=day===(n.getDay()+6)%7,dt=nextDate(day);
  return `<div id=wd class=wd>${wd()}</div>${exStrip()}<h2 onclick="tap()" style="user-select:none">Розклад уроків</h2><div class=mut>${DN[day]}, ${fd(dt)}</div><div class=pills>${DS.map((d,i)=>`<button class="pill ${i==day?'on':''}" onclick="day=${i};V()">${d}</button>`).join('')}</div>`+
@@ -182,53 +184,99 @@ function vHw(){
  return `<h2>Домашні завдання</h2><div class=mut>Натисни на завдання, щоб відмітити виконане (це бачиш лише ти)</div>`+(ds.length?ds.map(d=>{const dd=new Date(d+'T00:00');return `<h3>${WD[(dd.getDay()+6)%7]}, ${fd(dd)}</h3>`+g[d].map(([x,v,k],i)=>{const[,ik,h]=sic(x),dn=localStorage.getItem('hd'+k);return `<div class="card les ${dn?'dn':''}" style="--i:${i}" data-k="${e(k)}" onclick="hdn(this.dataset.k)"><div class=ic style="--h:${h}">${ico(ik)}</div><div><div class=sb>${e(x)}</div><small>${e(v)}</small></div><div class=rt><span class=chk>${dn?ico('chk'):''}</span></div></div>`}).join('')}).join(''):'<p class=mut>Домашки немає 🎉</p>');
 }
 function hdn(k){localStorage.getItem('hd'+k)?localStorage.removeItem('hd'+k):localStorage.setItem('hd'+k,1);V()}
-function defMaps(){
- const q=(n,x,y,w,h,k)=>({n,x,y,w,h,k:k||'r',t:'',o:''}),T=(n,x,w,k)=>q(n,x,10,w,150,k),B=(n,x,w)=>q(n,x,280,w,150);
- return[{n:'Крило 326–339',w:1000,h:440,rooms:[T('339',46,98),T('',195,53,'s'),T('337',250,45),T('335',294,132),T('333',426,146),T('331',574,45),T('329',619,109),T('327',727,50),T('',779,42,'s'),T('',823,56,'x'),T('',898,62,'x'),B('338',13,148),B('336',161,151),B('334',312,148),B('332А',460,104),B('332',564,45),B('330',609,162),B('328',771,95),B('326',866,129)]},
- {n:'Крило 304–314',w:1000,h:440,rooms:[T('',31,94,'x'),T('',218,52,'s'),T('314',270,164),T('312',434,52),T('310',486,133),T('308',619,127),T('306',749,47),T('',799,60,'s'),T('',862,44,'x'),T('',909,47,'x'),B('313',10,166),B('311',176,166),B('309',342,133),B('307А',475,120),B('307',595,138),B('305',733,130),B('304',863,130)]}]}
-let sv='t',mc=0,mz=.8,mq='',mi=-1,dg=null;
+function defFloors(){
+ const mk=(n,x,y,w,h,k,t)=>({n,x,y,w,h,k:k||'r',t:t||'',o:''}),
+ row=(L,off,top)=>L.map(([n,x,w,k,t,h])=>mk(n,x+off,top?10:280,w,h||150,k,t)),
+ conn=[mk('',1000,10,160,150,'x','Середня частина (нема на плані)'),mk('',1000,280,160,150,'x','Середня частина (нема на плані)')],
+ R=[[['',27,71,'x'],['',134,57,'x'],['',191,48,'s'],['314',239,160],['312',399,52],['310',450,137],['308',587,142],['306',729,49],['',779,44,'s'],['',823,73,'x'],['',902,55,'x']],[['313',11,153],['311',164,153],['309',317,150],['307А',467,98,'r','',125],['307',565,145],['305',710,139],['304',849,137]]],
+ R2=[[['216',23,78],['',141,52,'x'],['',193,51,'s'],['214',243,159],['212',403,55],['210',457,138],['208',595,141],['206',737,49],['',786,46,'s'],['',833,49,'x'],['',912,48,'x']],[['213',11,152],['211',164,152],['209',316,152],['207А',469,98,'r','',125],['207',567,150],['205',716,158],['203',874,118]]],
+ R1=[[['',38,61,'x'],['',139,52,'x'],['',194,46,'s'],['114',241,165],['112',406,49],['110',455,142],['',597,87,'h','Вестибюль'],['108',684,49],['106',730,46],['',783,44,'s'],['104',827,56],['',911,52,'x']],[['115',15,148],['113',162,151],['111',313,162],['109',476,84],['107',560,151],['105',711,145],['103',856,142]]],
+ L3=[[['339',40,103],['',143,54,'x'],['',200,52,'s'],['337',252,43],['335',295,138],['333',433,152],['331',585,46],['329',630,112],['327',743,46],['',790,46,'s'],['',837,50,'x'],['',911,49,'x']],[['338',11,155],['336',166,158],['334',324,155],['332А',479,97,'r','',125],['332',576,46],['330',622,163],['328',785,92],['326',877,120]]],
+ L2=[[['',28,103,'x'],['',131,53,'x'],['',184,50,'s'],['234',234,50],['232',284,134],['230',418,153],['228',571,47],['226',618,115],['',733,50,'x'],['',785,47,'s'],['',832,52,'x'],['',912,48,'x']],[['235',9,150],['233',159,153],['231',312,153],['',464,100,'x','',125],['229',564,44],['227',608,168],['225',776,97],['223',873,127]]],
+ L1=[[['143',46,80],['',137,57,'x'],['',200,51,'s'],['',254,57,'x'],['',314,137,'h','Вестибюль'],['',451,166,'x'],['',617,51,'x'],['',668,46,'x'],['',714,69,'r','Медичний пункт'],['',783,40,'x'],['',822,57,'s'],['',886,50,'x'],['',936,57,'x']],[['142',11,157],['141',168,160],['139',328,160],['137',488,106],['135',594,54],['133',648,180],['131',828,91],['129',919,80]]],
+ fl=(n,l,r)=>({n,w:2170,h:440,rooms:[...row(l[0],0,1),...row(l[1],0,0),...conn.map(x=>({...x})),...row(r[0],1160,1),...row(r[1],1160,0)]});
+ return[fl('1 поверх',L1,R1),fl('2 поверх',L2,R2),fl('3 поверх',L3,R)];
+}
+let sv='t',mc=-1,mq='',mi=-1;const VWS={},PT=new Map();let GS=null;
 const rmI=n=>{const t=n?D.teachers.filter(x=>x.r&&x.r==n):[],l=[];if(n)D.schedule.forEach((day,w)=>day.forEach((x,i)=>{if(x.r==n)l.push({w,i,s:x.s})}));return{t,l}};
 const cut=(s,n)=>s.length>n?s.slice(0,n-1)+'…':s;
-function mapSVG(m,ed){
- const o=NI(),cur=!ed&&o.t=='cur'?o.cur.r:'',nxr=!ed&&o.nx?o.nx.r:'',q=ed?'':mq.trim().toLowerCase();
- return `<svg id=msv class="${ed?'ed':''}" viewBox="0 0 ${m.w} ${m.h}" style="width:${ed?'100%':Math.round(m.w*mz)+'px'}"><rect x=6 y=164 width=988 height=112 rx=18 class=mco /><text x=500 y=220 class=mct>КОРИДОР</text>${m.rooms.map((r,i)=>{
+const bestFloor=()=>{let b=D.fl.length-1,m=0;D.fl.forEach((F,i)=>{const c=F.rooms.filter(r=>r.n&&rmI(r.n).l.length).length;if(c>m){m=c;b=i}});return b};
+function mmatch(r,q){if(!q)return false;const f=rmI(r.n);return String(r.n).toLowerCase().includes(q)||(r.t||'').toLowerCase().includes(q)||f.t.some(t=>(t.n+' '+ts(t).join(' ')).toLowerCase().includes(q))}
+function mapSVG(F,ed){
+ const o=NI(),cur=!ed&&o.t=='cur'?o.cur.r:'',nxr=!ed&&o.nx?o.nx.r:'',q=ed?'':mq.trim().toLowerCase(),P='stp'+(ed?'e':'v');
+ return `<svg class="msv ${ed?'ed':''}"><defs><pattern id=${P} width=10 height=10 patternUnits=userSpaceOnUse><rect width=10 height=10 fill="#151a28" /><path d="M0 5h10" class=stl /></pattern></defs><g class=vg><rect class=bo x=4 y=2 width=${F.w-8} height=${F.h-4} rx=16 /><rect class=cor x=10 y=162 width=${F.w-20} height=116 rx=10 /><text class=mct x=${F.w/2} y=220>КОРИДОР</text>${F.rooms.map((r,i)=>{
   const f=rmI(r.n),th=f.t[0],hue=f.l.length?sic(f.l[0].s)[2]:th&&ts(th)[0]?sic(ts(th)[0])[2]:null,
-  mt=q&&(String(r.n).toLowerCase().includes(q)||(r.t||'').toLowerCase().includes(q)||f.t.some(t=>(t.n+' '+ts(t).join(' ')).toLowerCase().includes(q))),
-  cl=['rm',r.k=='s'?'st':r.k=='x'?'xx':'',hue!==null?'hv':'',f.l.length?'mine':'',cur&&r.n==cur?'now':'',nxr&&r.n==nxr&&cur!=r.n?'nxt':'',mt?'mt':'',ed&&i==mi?'sel':''].join(' '),
-  lab=r.k=='s'?'Сходи':r.n,sub=r.k=='s'?'':th?cut(th.n.trim().split(' ')[0],Math.max(4,Math.floor(r.w/7)))+(f.t.length>1?' +'+(f.t.length-1):''):cut(r.t||'',Math.max(4,Math.floor(r.w/7)));
-  return `<g class="${cl}" data-i=${i} transform="translate(${r.x} ${r.y})" style="--h:${hue===null?220:hue}" ${ed?'':`onclick="rmo(${i})"`}><rect width=${r.w} height=${r.h} rx=12 /><text class=rn x=${r.w/2} y=${r.h/2-(sub?8:0)} style="font-size:${r.k=='s'||r.w<60?14:22}px">${e(lab)}</text>${sub?`<text class=rs x=${r.w/2} y=${r.h/2+16}>${e(sub)}</text>`:''}</g>`}).join('')}</svg>`;
+  cl=['rm',r.k=='s'?'st':r.k=='x'?'xx':r.k=='h'?'h':'',hue!==null?'hv':'',f.l.length?'mine':'',cur&&r.n==cur?'now':'',nxr&&r.n==nxr&&cur!=r.n?'nxt':'',mmatch(r,q)?'mt':'',ed&&i==mi?'sel':''].join(' '),
+  lab=r.k=='s'?'Сходи':(r.n||r.t||''),fs=Math.max(9,Math.min(22,Math.floor(r.w*1.5/Math.max(1,lab.length)))),
+  sub=r.k=='s'?'':th?cut(th.n.trim().split(' ')[0],Math.max(4,Math.floor(r.w/7)))+(f.t.length>1?' +'+(f.t.length-1):''):(r.n&&r.t?cut(r.t,Math.max(4,Math.floor(r.w/7))):'');
+  return `<g class="${cl}" data-i=${i} transform="translate(${r.x} ${r.y})" style="--h:${hue===null?220:hue}"><rect class=fl width=${r.w} height=${r.h} rx=6 ${r.k=='s'?`style="fill:url(#${P})"`:''} />${r.k=='r'||r.k=='h'?`<rect class=dr x=${r.w/2-16} y=${r.y<165?r.h-3:-3} width=32 height=6 />`:''}<text class=rn x=${r.w/2} y=${r.h/2-(sub?8:0)} style="font-size:${r.k=='s'?14:fs}px">${e(lab)}</text>${sub?`<text class=rs x=${r.w/2} y=${r.h/2+16}>${e(sub)}</text>`:''}</g>`}).join('')}</g></svg>`;
 }
+/* жести: рух, щипок, колесо */
+function vset(s){const v=s._v,g=s.querySelector('.vg');if(!g)return;g.style.transform=`translate(${v.x.toFixed(1)}px,${v.y.toFixed(1)}px) scale(${v.k.toFixed(4)})`;s.classList.toggle('zi',v.k>=.7);VWS[s.classList.contains('ed')?'e':'v']=v}
+function focusV(s){
+ const b=s.getBoundingClientRect(),cw=b.width||360,ch=b.height||400,F=D.fl[mc];
+ if(s.classList.contains('ed')){const k=Math.min(cw/F.w,ch/F.h)*.96;return{k,x:(cw-F.w*k)/2,y:(ch-F.h*k)/2}}
+ const m=F.rooms.filter(r=>r.n&&rmI(r.n).l.length),k=cw/820;let cx=F.w/2;if(m.length)cx=m.reduce((a,r)=>a+r.x+r.w/2,0)/m.length;
+ return{k,x:cw/2-cx*k,y:ch/2-F.h/2*k};
+}
+function mapInit(){document.querySelectorAll('svg.msv').forEach(s=>{const key=s.classList.contains('ed')?'e':'v';if(!VWS[key])VWS[key]=focusV(s);s._v=VWS[key];vset(s)})}
+function zoomAt(s,px,py,f){const v=s._v,k=Math.max(.06,Math.min(4,v.k*f)),r=k/v.k;v.x=px-(px-v.x)*r;v.y=py-(py-v.y)*r;v.k=k;vset(s)}
+function anim(s){const g=s.querySelector('.vg');g.classList.add('an');setTimeout(()=>g.classList.remove('an'),600)}
+function mzb(f,ed){const s=$(ed?'.mapw svg':'.mapc svg');if(!s)return;const b=s.getBoundingClientRect();anim(s);zoomAt(s,b.width/2,b.height/2,f)}
+function mfit(ed){const s=$(ed?'.mapw svg':'.mapc svg');if(!s)return;const b=s.getBoundingClientRect(),F=D.fl[mc],k=Math.min(b.width/F.w,b.height/F.h)*.96;anim(s);Object.assign(s._v,{k,x:(b.width-F.w*k)/2,y:(b.height-F.h*k)/2});vset(s)}
+function mfocus(i){const s=$('.mapc svg');if(!s)return;const r=D.fl[mc].rooms[i],b=s.getBoundingClientRect(),v=s._v;anim(s);v.k=Math.max(v.k,.95);v.x=b.width/2-(r.x+r.w/2)*v.k;v.y=b.height/2-(r.y+r.h/2)*v.k;vset(s)}
+document.addEventListener('pointerdown',ev=>{
+ const s=ev.target.closest&&ev.target.closest('svg.msv');if(!s||!s._v)return;
+ const b=s.getBoundingClientRect(),p={x:ev.clientX-b.left,y:ev.clientY-b.top};PT.set(ev.pointerId,p);try{s.setPointerCapture(ev.pointerId)}catch(_){}
+ if(PT.size==1){const g=ev.target.closest('g[data-i]'),ed=s.classList.contains('ed');GS={s,ed,g:ed&&g?g:null,i:g?+g.dataset.i:-1,sx:ev.clientX,sy:ev.clientY,moved:0};if(GS.g){const r=D.fl[mc].rooms[GS.i];GS.ox=r.x;GS.oy=r.y;mi=GS.i}}
+ else if(PT.size==2&&GS){const[a,c]=[...PT.values()];GS.pinch={d:Math.hypot(a.x-c.x,a.y-c.y)||1,mx:(a.x+c.x)/2,my:(a.y+c.y)/2,k:s._v.k,x:s._v.x,y:s._v.y};GS.g=null;GS.moved=1}
+});
+document.addEventListener('pointermove',ev=>{
+ const p=PT.get(ev.pointerId);if(!p||!GS)return;const s=GS.s,b=s.getBoundingClientRect(),nx=ev.clientX-b.left,ny=ev.clientY-b.top,dx=nx-p.x,dy=ny-p.y,v=s._v;p.x=nx;p.y=ny;
+ if(PT.size>=2&&GS.pinch){const[a,c]=[...PT.values()],d=Math.hypot(a.x-c.x,a.y-c.y)||1,mx=(a.x+c.x)/2,my=(a.y+c.y)/2,P=GS.pinch,k=Math.max(.06,Math.min(4,P.k*d/P.d));v.k=k;v.x=mx-(P.mx-P.x)*(k/P.k);v.y=my-(P.my-P.y)*(k/P.k);vset(s);return}
+ if(Math.hypot(ev.clientX-GS.sx,ev.clientY-GS.sy)>6)GS.moved=1;if(!GS.moved)return;
+ if(GS.g){const F=D.fl[mc],r=F.rooms[GS.i];r.x=Math.max(0,Math.min(F.w-r.w,Math.round((GS.ox+(ev.clientX-GS.sx)/v.k)/2)*2));r.y=Math.max(0,Math.min(F.h-r.h,Math.round((GS.oy+(ev.clientY-GS.sy)/v.k)/2)*2));GS.g.setAttribute('transform',`translate(${r.x} ${r.y})`)}
+ else{v.x+=dx;v.y+=dy;vset(s)}
+});
+function pend(ev){
+ PT.delete(ev.pointerId);if(!GS||PT.size>0)return;const g=GS;GS=null;
+ if(g.ed){if(g.i>=0){A();if(g.moved&&!g.pinch)R()}return}
+ if(!g.moved){const t=document.elementFromPoint(ev.clientX,ev.clientY),gg=t&&t.closest&&t.closest('g[data-i]');if(gg)rmo(+gg.dataset.i)}
+}
+document.addEventListener('pointerup',pend);document.addEventListener('pointercancel',pend);
+document.addEventListener('wheel',ev=>{const s=ev.target.closest&&ev.target.closest('svg.msv');if(!s||!s._v)return;ev.preventDefault();const b=s.getBoundingClientRect();zoomAt(s,ev.clientX-b.left,ev.clientY-b.top,Math.exp(-ev.deltaY*.0018))},{passive:false});
+/* перегляд */
+function mpl(){const o=NI(),rr=o.t=='cur'?o.cur.r:'';return D.fl.map((F,i)=>`<button class="pill ${i==mc?'on':''}" onclick="mfs(${i})">${e(F.n)}${rr&&F.rooms.some(r=>r.n==rr)?' ●':''}</button>`).join('')}
 function vMap(){
- if(mc>=D.maps.length)mc=0;const m=D.maps[mc];
- return `<h2>Карта школи</h2><div class=mut>3 поверх. Торкнись кімнати — побачиш вчителя та уроки.</div>${D.maps.length>1?`<div class=pills>${D.maps.map((x,i)=>`<button class="pill ${i==mc?'on':''}" onclick="mc=${i};V()">${e(x.n)}</button>`).join('')}</div>`:''}<div class=mtl><input id=mq placeholder="Знайти кабінет або вчителя" value="${e(mq)}" oninput="mq=this.value;mrf()"><button onclick="zm(-.15)">−</button><button onclick="zm(.15)">+</button></div><div class=mapc id=mapc>${mapSVG(m)}</div><div class=mut>Зелена рамка — де йде урок, синя пунктирна — де наступний, кольором підсвічені кабінети з уроками вашого класу.</div>`;
+ if(mc<0||mc>=D.fl.length)mc=bestFloor();
+ return `<h2>Карта школи</h2><div class=mut>Рухай і масштабуй пальцями. Торкнись кімнати — побачиш деталі.</div><div class=pills id=mfl>${mpl()}</div><div class=mtl><input id=mq placeholder="Знайти кабінет або вчителя" value="${e(mq)}" oninput="mq=this.value;msearch()"><button onclick="mzb(1.4)">+</button><button onclick="mzb(.7)">−</button><button onclick="mfit()" style="width:auto;padding:0 12px;font-size:14px">Все</button></div><div class=mapc id=mapc>${mapSVG(D.fl[mc])}</div><div class=mut>Зелена рамка — де йде урок, синя пунктирна — де наступний. Кольором підсвічені кабінети з уроками вашого класу, а підписи вчителів з’являються при наближенні.</div>`;
 }
-function mrf(){const c=$('#mapc');if(!c)return;c.innerHTML=mapSVG(D.maps[mc]);const g=c.querySelector('.mt');if(g){const b=g.getBoundingClientRect(),cb=c.getBoundingClientRect();c.scrollLeft+=b.left-cb.left-cb.width/2+b.width/2}}
-function zm(d){mz=Math.max(.5,Math.min(1.6,mz+d));const v=$('#msv');if(v)v.style.width=Math.round(D.maps[mc].w*mz)+'px'}
-function goMap(n){const i=D.maps.findIndex(m=>m.rooms.some(r=>r.n==n));if(i<0){toast('Цього кабінету ще нема на карті');return}mc=i;mq=n;tab='tea';sv='m';R();setTimeout(mrf,60)}
+function mrf(){const c=$('#mapc');if(!c)return;if(mc<0||mc>=D.fl.length)mc=bestFloor();c.innerHTML=mapSVG(D.fl[mc]);$('#mfl').innerHTML=mpl();mapInit();const q=mq.trim().toLowerCase();if(q){const i=D.fl[mc].rooms.findIndex(r=>mmatch(r,q));if(i>=0)mfocus(i)}}
+function mfs(i){mc=i;VWS.v=null;mrf()}
+function msearch(){const q=mq.trim().toLowerCase();if(q&&!D.fl[mc].rooms.some(r=>mmatch(r,q))){const fi=D.fl.findIndex(F=>F.rooms.some(r=>mmatch(r,q)));if(fi>=0){mc=fi;VWS.v=null}}mrf()}
+function goMap(n){const i=D.fl.findIndex(F=>F.rooms.some(r=>r.n==n));if(i<0){toast('Цього кабінету ще нема на карті');return}mc=i;mq=n;VWS.v=null;tab='tea';sv='m';R();setTimeout(mrf,80)}
 const MB=x=>x.r&&!x.on&&x.st!='x'?`<button class=jn onclick="goMap('${e(x.r)}')">${ico('map')}На карті</button>`:'';
 function vTea(){return `<div class=seg style="margin:10px 0 0"><button class="${sv=='t'?'on':''}" onclick="sv='t';V()">Вчителі</button><button class="${sv=='m'?'on':''}" onclick="sv='m';V()">Карта</button></div>`+(sv=='m'?vMap():vTea0())}
 function rmo(i){
- const m=D.maps[mc],r=m.rooms[i],f=rmI(r.n);
+ const F=D.fl[mc],r=F.rooms[i],f=rmI(r.n);
  const L=f.l.map(x=>`<div class=rl><b>${DS[x.w]}</b><span>${x.i+1} урок${(D.bells[x.i]||{}).a?' · '+D.bells[x.i].a:''}</span><span class=sb2>${e(x.s)}</span></div>`).join('');
  const T=f.t.map(t=>{const h=hue(t.n);return `<div class="card les" style="margin:6px 0"><div class=av style="background:linear-gradient(135deg,hsl(${h} 80% 55%),hsl(${h+50} 80% 45%))">${t.p?`<img src="${e(t.p)}" alt="">`:e((t.n||'?').trim()[0])}</div><div><div class=sb>${e(t.n)}</div><small>${e(ts(t).join(', '))}</small></div></div>`}).join('');
  const d=document.createElement('div');d.className='ins';d.id='rms';d.onclick=ev=>{if(ev.target==d)d.remove()};
- d.innerHTML=`<div class=insc><div class=rmh><b class=rbig>${e(r.k=='s'?'Сходи':r.n||'—')}</b><div><div class=sb>${e(r.t||(r.k=='s'?'Сходи між поверхами':r.n?'Кабінет '+r.n:'Приміщення'))}</div><small>${e(m.n)}</small></div></div>${T?'<h3>Вчителі</h3>'+T:''}${L?'<h3>Наші уроки тут</h3>'+L:''}${r.o?`<div class=hw>${ico('pen')}<span>${e(r.o)}</span></div>`:''}${!T&&!L&&!r.o?'<p class=mut>Поки що тут нічого не записано.</p>':''}<div class=ibs><button class="ib2 on" onclick="this.closest('.ins').remove()">Закрити</button></div></div>`;document.body.append(d);
+ d.innerHTML=`<div class=insc><div class=rmh><b class=rbig>${e(r.k=='s'?'Сходи':r.n||'—')}</b><div><div class=sb>${e(r.t||(r.k=='s'?'Сходи між поверхами':r.n?'Кабінет '+r.n:'Приміщення'))}</div><small>${e(F.n)}</small></div></div>${T?'<h3>Вчителі</h3>'+T:''}${L?'<h3>Наші уроки тут</h3>'+L:''}${r.o?`<div class=hw>${ico('pen')}<span>${e(r.o)}</span></div>`:''}${!T&&!L&&!r.o?'<p class=mut>Поки що тут нічого не записано.</p>':''}<div class=ibs><button class="ib2 on" onclick="this.closest('.ins').remove()">Закрити</button></div></div>`;document.body.append(d);
 }
 /* редактор карти (адмінка) */
+function mrE(){const w=$('.mapw');if(w){w.innerHTML=mapSVG(D.fl[mc],1);mapInit()}}
 function mpv(){
- if(mc>=D.maps.length)mc=0;const m=D.maps[mc],r=m.rooms[mi],pa=`maps.${mc}.rooms.${mi}`;
- return `<div class=pills>${D.maps.map((x,i)=>`<button class="pill ${i==mc?'on':''}" onclick="mc=${i};mi=-1;A()">${e(x.n)}</button>`).join('')}<button class=pill onclick="addMap()">+ Крило</button></div><div class=row><input data-p="maps.${mc}.n" value="${e(m.n)}" placeholder="Назва крила"><button class=x onclick="delMap()">✕</button></div><div class=mut>Перетягуй кімнати пальцем, торкнись — щоб редагувати.</div><div class=mapw>${mapSVG(m,1)}</div>`+
- (r?`<div class=rc style="display:block"><div class=row><input data-p="${pa}.n" placeholder="Номер" value="${e(r.n)}" style="max-width:110px"><input data-p="${pa}.t" placeholder="Назва (напр. Кабінет фізики)" value="${e(r.t)}"></div><div class=row><input data-p="${pa}.o" placeholder="Примітка (напр. вхід з двору)" value="${e(r.o)}"></div><div class=seg>${[['r','Кабінет'],['s','Сходи'],['x','Інше']].map(([k,n])=>`<button class="${r.k==k?'on':''}" onclick="rk('${k}')">${n}</button>`).join('')}</div><div class=mut style="margin:10px 0 0">Позиція</div><div class=nud><button onclick="nud(-6,0,0,0)">←</button><button onclick="nud(0,-6,0,0)">↑</button><button onclick="nud(0,6,0,0)">↓</button><button onclick="nud(6,0,0,0)">→</button></div><div class=mut style="margin:6px 0 0">Розмір</div><div class=nud><button onclick="nud(0,0,-6,0)">Ш −</button><button onclick="nud(0,0,6,0)">Ш +</button><button onclick="nud(0,0,0,-6)">В −</button><button onclick="nud(0,0,0,6)">В +</button></div><div class=row><button class=add style="margin:0" onclick="addRm()">+ Нова кімната</button><button class=x style="width:auto;padding:0 16px" onclick="delRm()">Видалити</button></div></div>`:`<button class=add onclick="addRm()">+ Додати кімнату</button>`);
+ if(mc<0||mc>=D.fl.length)mc=bestFloor();const F=D.fl[mc],r=F.rooms[mi],pa=`fl.${mc}.rooms.${mi}`;
+ return `<div class=pills>${D.fl.map((x,i)=>`<button class="pill ${i==mc?'on':''}" onclick="mc=${i};mi=-1;VWS.e=null;A()">${e(x.n)}</button>`).join('')}<button class=pill onclick="addFl()">+ Поверх</button></div><div class=row><input data-p="fl.${mc}.n" value="${e(F.n)}" placeholder="Назва поверху"><button class=x onclick="delFl()">✕</button></div><div class=mut>Два пальці — масштаб, один по порожньому — рух, по кімнаті — перетягнути.</div><div class=mapw>${mapSVG(F,1)}</div><div class=mtl style="justify-content:flex-end"><button onclick="mzb(1.4,1)">+</button><button onclick="mzb(.7,1)">−</button><button onclick="mfit(1)" style="width:auto;padding:0 14px;font-size:14px">Все</button></div>`+
+ (r?`<div class=rc style="display:block"><div class=row><input data-p="${pa}.n" placeholder="Номер" value="${e(r.n)}" style="max-width:110px"><input data-p="${pa}.t" placeholder="Назва (напр. Кабінет фізики)" value="${e(r.t)}"></div><div class=row><input data-p="${pa}.o" placeholder="Примітка (напр. вхід з двору)" value="${e(r.o)}"></div><div class=seg>${[['r','Кабінет'],['s','Сходи'],['h','Зала'],['x','Інше']].map(([k,n])=>`<button class="${r.k==k?'on':''}" onclick="rk('${k}')">${n}</button>`).join('')}</div><div class=mut style="margin:10px 0 0">Позиція</div><div class=nud><button onclick="nud(-6,0,0,0)">←</button><button onclick="nud(0,-6,0,0)">↑</button><button onclick="nud(0,6,0,0)">↓</button><button onclick="nud(6,0,0,0)">→</button></div><div class=mut style="margin:6px 0 0">Розмір</div><div class=nud><button onclick="nud(0,0,-6,0)">Ш −</button><button onclick="nud(0,0,6,0)">Ш +</button><button onclick="nud(0,0,0,-6)">В −</button><button onclick="nud(0,0,0,6)">В +</button></div><div class=row><button class=add style="margin:0" onclick="addRm()">+ Нова кімната</button><button class=x style="width:auto;padding:0 16px" onclick="delRm()">Видалити</button></div></div>`:`<button class=add onclick="addRm()">+ Додати кімнату</button>`);
 }
-function rk(k){D.maps[mc].rooms[mi].k=k;A();R()}
-function nud(dx,dy,dw,dh){const r=D.maps[mc].rooms[mi];r.x=Math.max(0,r.x+dx);r.y=Math.max(0,r.y+dy);r.w=Math.max(20,r.w+dw);r.h=Math.max(20,r.h+dh);A();R()}
-function addRm(){const m=D.maps[mc];m.rooms.push({n:'',x:460,y:180,w:80,h:60,k:'r',t:'',o:''});mi=m.rooms.length-1;A();R()}
-function delRm(){if(!confirm('Видалити кімнату?'))return;D.maps[mc].rooms.splice(mi,1);mi=-1;A();R()}
-function addMap(){D.maps.push({n:'Нове крило',w:1000,h:440,rooms:[]});mc=D.maps.length-1;mi=-1;A();R()}
-function delMap(){if(D.maps.length<2){toast('Має лишитись хоча б одна карта');return}if(!confirm('Видалити це крило разом з усіма кімнатами?'))return;D.maps.splice(mc,1);mc=0;mi=-1;A();R()}
-document.addEventListener('pointerdown',ev=>{const g=adm&&ev.target.closest&&ev.target.closest('#msv.ed g[data-i]');if(!g)return;const sv0=$('#msv'),b=sv0.getBoundingClientRect(),i=+g.dataset.i,r=D.maps[mc].rooms[i];mi=i;dg={g,i,k:D.maps[mc].w/b.width,x0:ev.clientX,y0:ev.clientY,ox:r.x,oy:r.y,mv:0};try{sv0.setPointerCapture(ev.pointerId)}catch(_){}ev.preventDefault()});
-document.addEventListener('pointermove',ev=>{if(!dg)return;const m=D.maps[mc],r=m.rooms[dg.i],dx=(ev.clientX-dg.x0)*dg.k,dy=(ev.clientY-dg.y0)*dg.k;if(Math.abs(dx)+Math.abs(dy)>4)dg.mv=1;if(!dg.mv)return;r.x=Math.max(0,Math.min(m.w-r.w,Math.round((dg.ox+dx)/2)*2));r.y=Math.max(0,Math.min(m.h-r.h,Math.round((dg.oy+dy)/2)*2));dg.g.setAttribute('transform',`translate(${r.x} ${r.y})`)});
-document.addEventListener('pointerup',()=>{if(!dg)return;const mv=dg.mv;dg=null;A();if(mv)R()});
+function rk(k){D.fl[mc].rooms[mi].k=k;A();R()}
+function nud(dx,dy,dw,dh){const r=D.fl[mc].rooms[mi];r.x=Math.max(0,r.x+dx);r.y=Math.max(0,r.y+dy);r.w=Math.max(20,r.w+dw);r.h=Math.max(20,r.h+dh);A();R()}
+function addRm(){const F=D.fl[mc],s=$('.mapw svg');let x=Math.round(F.w/2-40),y=180;if(s&&s._v){const b=s.getBoundingClientRect(),v=s._v;x=Math.round((b.width/2-v.x)/v.k-40);y=Math.round((b.height/2-v.y)/v.k-30)}F.rooms.push({n:'',x,y,w:80,h:60,k:'r',t:'',o:''});mi=F.rooms.length-1;A();R()}
+function delRm(){if(!confirm('Видалити кімнату?'))return;D.fl[mc].rooms.splice(mi,1);mi=-1;A();R()}
+function addFl(){D.fl.push({n:'Новий поверх',w:2170,h:440,rooms:[]});mc=D.fl.length-1;mi=-1;VWS.e=null;VWS.v=null;A();R()}
+function delFl(){if(D.fl.length<2){toast('Має лишитись хоча б один поверх');return}if(!confirm('Видалити цей поверх разом з усіма кімнатами?'))return;D.fl.splice(mc,1);mc=0;mi=-1;VWS.e=null;VWS.v=null;A();R()}
 function vBel(){
  const n=new Date(),m=n.getHours()*60+n.getMinutes();
  return `<h2>Розклад дзвінків</h2><div class=mut>Тривалість перерв рахується автоматично</div>`+D.bells.map((b,i)=>{const cur=m>=mm(b.a)&&m<mm(b.b),nx=D.bells[i+1],br=nx?mm(nx.a)-mm(b.b):0;return `<div class="card les ${cur?'cur':''}" style="--i:${i}"><b class=num>${i+1}</b><div class=sb>${e(b.a)} – ${e(b.b)}</div><div class=rt><small>${nx?'перерва '+br+' хв':'кінець'}</small></div></div>`}).join('');
@@ -378,8 +426,8 @@ function AB(){
  return `<h3>Клас</h3><input data-p="cls" value="${e(D.cls)}"><h3>Канікули</h3><div class=row><input data-p="hol.n" value="${e(D.hol.n)}"></div><div class=row><input data-p="hol.d" type="datetime-local" value="${e(D.hol.d)}"></div><h3>Голосування</h3><button class=add onclick="D.poll.on=D.poll.on===false;A();R()">${D.poll.on===false?'Вимкнено — натисни, щоб увімкнути':'Увімкнено — натисни, щоб вимкнути'}</button><div class=row><input data-p="poll.q" value="${e(D.poll.q)}"></div>${D.poll.opts.map((o,i)=>`<div class=row><input data-p="poll.opts.${i}" value="${e(o)}"><button class=x onclick="del('poll.opts',${i})">✕</button></div>`).join('')}<button class=add onclick="D.poll.opts.push('');A();R()">+ Варіант</button><button class=add onclick="D.poll.id=String(Date.now());VT=[];A();R();toast('Нове голосування — голоси обнулено')">Нове голосування (обнулити голоси)</button><h3>Збереження для всіх (GitHub)</h3><div class=mut>Токен зберігається лише в цьому браузері</div><input placeholder="користувач/репозиторій" value="${e(G.r)}" oninput="gh('r',this.value)"><div class=row><input placeholder="гілка (main)" value="${e(G.b)}" oninput="gh('b',this.value)"></div><input type=password placeholder="GitHub токен" value="${e(G.t)}" oninput="gh('t',this.value)"><h3>Голосування для всіх (Firebase)</h3><input data-p="fb" placeholder="https://назва-default-rtdb.firebaseio.com" value="${e(D.fb)}">`;
 }
 function A(){const sc=($('.body')||{}).scrollTop||0,t=[['sch','Розклад'],['hw','ДЗ'],['sb','Заміни'],['an','Оголошення'],['ex','Контрольні'],['bel','Дзвінки'],['tea','Вчителі'],['mp','Карта'],['bk','Книги'],['fl','Файли'],['ib','Скринька'],['oth','Інше']];
- $('#adm').innerHTML=adm?`<div class=sheet><div class=sh><b>⚙️ Адмінка</b><button class=x onclick="adm=0;A()">✕</button></div><div class=pills>${t.map(([k,n])=>`<button class="pill ${k==at?'on':''}" onclick="goT('${k}')">${n}</button>`).join('')}</div><div class=body>${AB()}</div><button class=save onclick="save()">Зберегти й опублікувати</button></div>`:'';const bd=$('.body');if(bd)bd.scrollTop=sc}
-document.addEventListener('input',ev=>{const p=ev.target.dataset&&ev.target.dataset.p;if(p){setp(p,ev.target.value);if(!adm)return;if(at=='mp'){const w=$('.mapw');if(w)w.innerHTML=mapSVG(D.maps[mc],1)}clearTimeout(window._rt);window._rt=setTimeout(R,300)}});
+ $('#adm').innerHTML=adm?`<div class=sheet><div class=sh><b>⚙️ Адмінка</b><button class=x onclick="adm=0;A()">✕</button></div><div class=pills>${t.map(([k,n])=>`<button class="pill ${k==at?'on':''}" onclick="goT('${k}')">${n}</button>`).join('')}</div><div class=body>${AB()}</div><button class=save onclick="save()">Зберегти й опублікувати</button></div>`:'';const bd=$('.body');if(bd)bd.scrollTop=sc;mapInit()}
+document.addEventListener('input',ev=>{const p=ev.target.dataset&&ev.target.dataset.p;if(p){setp(p,ev.target.value);if(!adm)return;if(at=='mp')mrE();clearTimeout(window._rt);window._rt=setTimeout(R,300)}});
 function toast(t){const x=document.createElement('div');x.className='toast';x.textContent=t;document.body.append(x);setTimeout(()=>x.remove(),2800)}
 async function ghPush(n=1){
  const u=`https://api.github.com/repos/${G.r}/contents/data.json`,br=G.b||'main',h={Authorization:'Bearer '+G.t,Accept:'application/vnd.github+json'};
