@@ -153,7 +153,7 @@ button.jn{border:0;font:inherit;font-size:13px;font-weight:700;cursor:pointer;ma
 const $=s=>document.querySelector(s),e=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let D=JSON.parse($('#d').textContent);
 try{const l=JSON.parse(localStorage.getItem('cls')||'null');if(l&&l.v>(D.v||0))D=l}catch(_){}
-const NORM=()=>{D.books=D.books||[];D.files=D.files||[];D.hw=D.hw||{};D.ic=D.ic||{};D.ex=D.ex||[];D.sub=D.sub||{};D.ov=D.ov||{};D.an=D.an||[];if(!D.fl||!D.fl.length||D.fv!==4){D.fl=defFloors();D.fv=4}D.teachers.forEach(t=>{if(!Array.isArray(t.s))t.s=t.s?[t.s]:[]})};NORM();
+const NORM=()=>{D.books=D.books||[];D.files=D.files||[];D.hw=D.hw||{};D.ic=D.ic||{};D.ex=D.ex||[];D.sub=D.sub||{};D.ov=D.ov||{};D.an=D.an||[];if(!D.fl||!D.fl.length||D.fv!==5){D.fl=defFloors();D.fv=5}D.teachers.forEach(t=>{if(!Array.isArray(t.s))t.s=t.s?[t.s]:[]})};NORM();
 let G={};try{G=JSON.parse(localStorage.getItem('gh')||'{}')}catch(_){}
 const gh=(k,v)=>{G[k]=v.trim();localStorage.setItem('gh',JSON.stringify(G))};
 const dev=(()=>{let d=localStorage.getItem('dev');if(!d){d=Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('dev',d)}return d})();
@@ -187,7 +187,7 @@ function vSch(){
 }
 function SC(x,i,b,cur,dt){
  const half=(g,j)=>{const[,ik,h]=sic(g.s),hw=(D.hw||{})[iso(dt)+'|'+x.s+'#'+(j+1)];
-  return `<div class=gh style="--h:${h}"><div class=gt><span class=gn>${j+1} група</span><span class=ic style="--h:${h};width:26px;height:26px;border-radius:8px">${ico(ik)}</span></div>${g.s!=x.s?`<div class=sb style="font-size:14px">${e(g.s)}</div>`:''}<small>${e(g.t||tch(g.s))}</small>${g.r?`<div class=gr><span class=room>${x.on?'онлайн':'каб. '+e(g.r)}</span>${x.on?'':`<button class=mbtn style="margin:0" onclick="event.stopPropagation();goMap('${e(g.r)}')">${ico('map')}</button>`}</div>`:''}${hw?`<div class=hw>${ico('pen')}<span>${e(hw)}</span></div>`:''}</div>`};
+  return `<div class=gh style="--h:${h}"><div class=gt><span class=gn>${j+1} група</span><span class=ic style="--h:${h};width:26px;height:26px;border-radius:8px">${ico(ik)}</span></div>${g.s!=x.s?`<div class=sb style="font-size:14px">${e(g.s)}</div>`:''}<small>${e(g.t||'')}</small>${g.r?`<div class=gr><span class=room>${x.on?'онлайн':'каб. '+e(g.r)}</span>${x.on?'':`<button class=mbtn style="margin:0" onclick="event.stopPropagation();goMap('${e(g.r)}')">${ico('map')}</button>`}</div>`:''}${hw?`<div class=hw>${ico('pen')}<span>${e(hw)}</span></div>`:''}</div>`};
  return `<div class="card les2 ${cur?'cur':''}" style="--i:${i}"><div class=l2h><b class=num>${i+1}</b><div class=sb>${e(x.s)}${BD(x,dt)}</div><small>${e(b.a)}${b.a?'–':''}${e(b.b)}</small></div><div class=gp>${x.gs.map(half).join('')}</div>${JN(x)}</div>`}
 function vHw(){
  const t0=iso(new Date()),g={};
@@ -204,13 +204,14 @@ function defFloors(){
  R2=[[['216',23,78],['',141,52,'x'],['',193,51,'s'],['214',243,159],['212',403,55],['210',457,138],['208',595,141],['206',737,49],['',786,46,'s'],['',833,49,'x'],['',912,48,'x']],[['213',11,152],['211',164,152],['209',316,152],['207А',469,98,'r','',125],['207',567,150],['205',716,158],['203',874,118]]],
  R1=[[['',38,61,'x'],['',139,52,'x'],['',194,46,'s'],['114',241,165],['112',406,49],['110',455,142],['',597,87,'h','Вестибюль'],['108',684,49],['106',730,46],['',783,44,'s'],['104',827,56],['',911,52,'x']],[['115',15,148],['113',162,151],['111',313,162],['109',476,84],['107',560,151],['105',711,145],['103',856,142]]],
  L3=[[['339',40,103],['',143,54,'x'],['',200,52,'s'],['337',252,43],['335',295,138],['333',433,152],['331',585,46],['329',630,112],['327',743,46],['',790,46,'s'],['',837,50,'x'],['',911,49,'x']],[['338',11,155],['336',166,158],['334',324,155],['332А',479,97,'r','',125],['332',576,46],['330',622,163],['328',785,92],['326',877,120]]],
- L2=[[['',28,103,'x'],['',131,53,'x'],['',184,50,'s'],['234',234,50],['232',284,134],['230',418,153],['228',571,47],['226',618,115],['',733,50,'x'],['',785,47,'s'],['',832,52,'x'],['',912,48,'x']],[['235',9,150],['233',159,153],['231',312,153],['',464,100,'x','',125],['229',564,44],['227',608,168],['225',776,97],['223',873,127]]],
+ L2=[[['',28,103,'x'],['',131,53,'x'],['',184,50,'s'],['234',234,50],['232',284,134],['230',418,153],['228',571,47],['226',618,115],['',733,50,'x'],['',785,47,'s'],['',832,52,'x'],['',912,48,'x']],[['235',9,150],['233',159,153],['231',312,153],['229А',464,100,'r','',125],['229',564,44],['227',608,168],['225',776,97],['223',873,127]]],
  L1=[[['143',46,80],['',137,57,'x'],['',200,51,'s'],['',254,57,'x'],['',314,137,'h','Вестибюль'],['',451,166,'x'],['',617,51,'x'],['',668,46,'x'],['',714,69,'r','Медичний пункт'],['',783,40,'x'],['',822,57,'s'],['',886,50,'x'],['',936,57,'x']],[['142',11,157],['141',168,160],['139',328,160],['137',488,106],['135',594,54],['133',648,180],['131',828,91],['129',919,80]]],
  fl=(n,l,r)=>({n,w:1320,h:1340,rooms:[...com(),...wing(r,0,20,170),...wing(l,1,860,170)]});
  return[fl('1 поверх',L1,R1),fl('2 поверх',L2,R2),fl('3 поверх',L3,R)];
 }
 let sv='t',mc=-1,mq='',mi=-1;const VWS={},PT=new Map();let GS=null;
-const rmI=n=>{const t=n?D.teachers.filter(x=>x.r&&x.r==n):[],l=[];if(n)D.schedule.forEach((day,w)=>day.forEach((x,i)=>{if(x.g){x.g.forEach(g=>{if(g.r==n)l.push({w,i,s:g.s||x.s})})}else if(x.r==n)l.push({w,i,s:x.s})}));return{t,l}};
+const eq=(a,b)=>!!a&&!!b&&String(a).trim().toUpperCase()==String(b).trim().toUpperCase(),inn=(arr,n)=>arr.some(z=>eq(z,n)),trms=t=>String(t.r||'').split(/[,;]+/).map(z=>z.trim()).filter(Boolean);
+const rmI=n=>{const t=n?D.teachers.filter(x=>trms(x).some(z=>eq(z,n))):[],l=[];if(n)D.schedule.forEach((day,w)=>day.forEach((x,i)=>{if(x.g){x.g.forEach(g=>{if(eq(g.r,n))l.push({w,i,s:g.s||x.s})})}else if(eq(x.r,n))l.push({w,i,s:x.s})}));return{t,l}};
 const cut=(s,n)=>s.length>n?s.slice(0,n-1)+'…':s;
 const bestFloor=()=>{let b=D.fl.length-1,m=0;D.fl.forEach((F,i)=>{const c=F.rooms.filter(r=>r.n&&rmI(r.n).l.length).length;if(c>m){m=c;b=i}});return b};
 function mmatch(r,q){if(!q)return false;const f=rmI(r.n);return String(r.n).toLowerCase().includes(q)||(r.t||'').toLowerCase().includes(q)||f.t.some(t=>(t.n+' '+ts(t).join(' ')).toLowerCase().includes(q))}
@@ -218,7 +219,7 @@ function mapSVG(F,ed){
  const o=NI(),cur=!ed&&o.t=='cur'?RS(o.cur):[],nxr=!ed&&o.nx?RS(o.nx):[],q=ed?'':mq.trim().toLowerCase(),P='stp'+(ed?'e':'v');
  return `<svg class="msv ${ed?'ed':''}"><defs><pattern id=${P} width=10 height=10 patternUnits=userSpaceOnUse><rect width=10 height=10 fill="#151a28" /><path d="M0 5h10" class=stl /></pattern></defs><g class=vg>${F.rooms.map((r,i)=>{
   const f=rmI(r.n),th=f.t[0],hue=f.l.length?sic(f.l[0].s)[2]:th&&ts(th)[0]?sic(ts(th)[0])[2]:null,
-  cl=['rm',r.k=='s'?'st':r.k=='x'?'xx':r.k=='h'?'h':r.k=='c'?'cr':'',hue!==null?'hv':'',f.l.length?'mine':'',r.n&&cur.includes(r.n)?'now':'',r.n&&nxr.includes(r.n)&&!cur.includes(r.n)?'nxt':'',mmatch(r,q)?'mt':'',ed&&i==mi?'sel':''].join(' '),
+  cl=['rm',r.k=='s'?'st':r.k=='x'?'xx':r.k=='h'?'h':r.k=='c'?'cr':'',hue!==null?'hv':'',f.l.length?'mine':'',r.n&&inn(cur,r.n)?'now':'',r.n&&inn(nxr,r.n)&&!inn(cur,r.n)?'nxt':'',mmatch(r,q)?'mt':'',ed&&i==mi?'sel':''].join(' '),
   lab=r.k=='c'?'':r.k=='s'?'Сходи':(r.n||r.t||''),fs=Math.max(9,Math.min(22,Math.floor(r.w*1.5/Math.max(1,lab.length)),Math.floor(r.h*.5))),
   sub=r.k=='s'?'':th?cut(th.n.trim().split(' ')[0],Math.max(4,Math.floor(r.w/7)))+(f.t.length>1?' +'+(f.t.length-1):''):(r.n&&r.t?cut(r.t,Math.max(4,Math.floor(r.w/7))):'');
   return {k:r.k,s:`<g class="${cl}" data-i=${i} transform="translate(${r.x} ${r.y})" style="--h:${hue===null?220:hue}"><rect class=fl width=${r.w} height=${r.h} rx=6 ${r.k=='s'?`style="fill:url(#${P})"`:''} />${(r.k=='r'||r.k=='h')&&r.d?`<rect class=dr x=${r.d=='l'?-3:r.d=='r'?r.w-3:r.w/2-16} y=${r.d=='u'?-3:r.d=='d'?r.h-3:r.h/2-16} width=${r.d=='l'||r.d=='r'?6:32} height=${r.d=='l'||r.d=='r'?32:6} />`:''}<g transform="translate(${r.w/2} ${r.h/2})"><g class=lr><text class=rn x=0 y=${sub?-8:0} dy=".35em" style="font-size:${r.k=='s'?14:fs}px">${e(lab)}</text>${sub?`<text class=rs x=0 y=16 dy=".35em">${e(sub)}</text>`:''}</g></g></g>`}}).sort((a,b)=>(b.k=='c')-(a.k=='c')).map(x=>x.s).join('')}</g></svg>`;
@@ -262,7 +263,7 @@ function pend(ev){
 document.addEventListener('pointerup',pend);document.addEventListener('pointercancel',pend);
 document.addEventListener('wheel',ev=>{const s=ev.target.closest&&ev.target.closest('svg.msv');if(!s||!s._v)return;ev.preventDefault();const b=s.getBoundingClientRect();const dd=ev.deltaY||ev.deltaX;if(ev.shiftKey)rotateAt(s,ev.clientX-b.left,ev.clientY-b.top,-dd*.004);else zoomAt(s,ev.clientX-b.left,ev.clientY-b.top,Math.exp(-dd*.0018))},{passive:false});
 /* перегляд */
-function mpl(){const o=NI(),rr=o.t=='cur'?RS(o.cur):[];return D.fl.map((F,i)=>`<button class="pill ${i==mc?'on':''}" onclick="mfs(${i})">${e(F.n)}${rr.some(n=>F.rooms.some(r=>r.n==n))?' ●':''}</button>`).join('')}
+function mpl(){const o=NI(),rr=o.t=='cur'?RS(o.cur):[];return D.fl.map((F,i)=>`<button class="pill ${i==mc?'on':''}" onclick="mfs(${i})">${e(F.n)}${rr.some(n=>F.rooms.some(r=>eq(r.n,n)))?' ●':''}</button>`).join('')}
 const RB=x=>x.gs?x.gs.map((g,j)=>g.r?`<button class=jn onclick="goMap('${e(g.r)}')">${ico('map')}Куди йти · ${j+1} група</button>`:'').join(''):`<button class=jn onclick="goMap('${e(x.r)}')">${ico('map')}Куди йти далі?</button>`;
 function vMap(){
  if(mc<0||mc>=D.fl.length)mc=bestFloor();
@@ -271,7 +272,7 @@ function vMap(){
 function mrf(){const c=$('#mapc');if(!c)return;if(mc<0||mc>=D.fl.length)mc=bestFloor();c.innerHTML=mapSVG(D.fl[mc]);$('#mfl').innerHTML=mpl();mapInit();const q=mq.trim().toLowerCase();if(q){const i=D.fl[mc].rooms.findIndex(r=>mmatch(r,q));if(i>=0)mfocus(i)}}
 function mfs(i){mc=i;VWS.v=null;mrf()}
 function msearch(){const q=mq.trim().toLowerCase();if(q&&!D.fl[mc].rooms.some(r=>mmatch(r,q))){const fi=D.fl.findIndex(F=>F.rooms.some(r=>mmatch(r,q)));if(fi>=0){mc=fi;VWS.v=null}}mrf()}
-function goMap(n){const i=D.fl.findIndex(F=>F.rooms.some(r=>r.n==n));if(i<0){toast('Цього кабінету ще нема на карті');return}mc=i;mq=n;VWS.v=null;tab='tea';sv='m';R();setTimeout(mrf,80)}
+function goMap(n){const i=D.fl.findIndex(F=>F.rooms.some(r=>eq(r.n,n)));if(i<0){toast('Цього кабінету ще нема на карті');return}mc=i;mq=n;VWS.v=null;tab='tea';sv='m';R();setTimeout(mrf,80)}
 const MB=x=>x.r&&!x.on&&x.st!='x'?`<button class=mbtn onclick="event.stopPropagation();goMap('${e(x.r)}')">${ico('map')}На карті</button>`:'';
 function vTea(){return `<div class=seg style="margin:10px 0 0"><button class="${sv=='t'?'on':''}" onclick="sv='t';V()">Вчителі</button><button class="${sv=='m'?'on':''}" onclick="sv='m';V()">Карта</button></div>`+(sv=='m'?vMap():vTea0())}
 function rmo(i){
