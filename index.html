@@ -127,6 +127,11 @@ button.jn{border:0;font:inherit;font-size:13px;font-weight:700;cursor:pointer;ma
 .rm.cr .fl{fill:#171d2c;stroke:none}.msv:not(.ed) .rm.cr{pointer-events:none}
 .rt{align-items:flex-end}
 .mbtn{display:inline-flex;gap:4px;align-items:center;margin-top:4px;padding:3px 9px;border-radius:9px;border:0;background:#5b9cff22;color:var(--a);font:inherit;font-size:11px;font-weight:700;cursor:pointer}.mbtn svg.i{width:12px;height:12px}
+.les2{display:block}.les2 .num{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:#5b9cff1f;color:var(--a);flex:none}.les2.cur .num{background:var(--a);color:#fff;animation:pl 1.8s infinite}
+.l2h{display:flex;align-items:center;gap:12px;margin-bottom:10px}.l2h .sb{flex:1;min-width:0}.l2h>small{color:var(--m)}
+.gp{display:grid;grid-template-columns:1fr 1fr;gap:8px}.gh{background:hsl(var(--h,220) 40% 50%/.09);border:1px solid hsl(var(--h,220) 50% 55%/.28);border-radius:14px;padding:10px;min-width:0}
+.gt{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.gn{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--m)}.gh small{display:block;color:var(--m)}.gr{display:flex;align-items:center;gap:6px;margin-top:6px}
+.gedit{background:var(--c2);border-radius:12px;padding:8px}.gedit .row{margin:6px 0 0}
 @media(min-width:700px){#app{padding-top:10px}h2{font-size:32px}.cdn{font-size:110px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -178,13 +183,17 @@ function V(){const f={sch:vSch,hw:vHw,bel:vBel,tea:vTea,lnk:vLnk,hol:vHol,vot:vV
 function vSch(){
  const L=D.schedule[day]||[],n=new Date(),m=n.getHours()*60+n.getMinutes(),td=day===(n.getDay()+6)%7,dt=nextDate(day);
  return `<div id=wd class=wd>${wd()}</div>${exStrip()}<h2 onclick="tap()" style="user-select:none">Розклад уроків</h2><div class=mut>${DN[day]}, ${fd(dt)}</div><div class=pills>${DS.map((d,i)=>`<button class="pill ${i==day?'on':''}" onclick="day=${i};V()">${d}</button>`).join('')}</div>`+
- (L.length?L.map((x0,i)=>{const x=eff(dt,i,x0),b={a:x.ta||'',b:x.tb||''},cur=td&&b.a&&x.st!='x'&&m>=mm(b.a)&&m<mm(b.b),[,ik,h]=sic(x.s);return `<div class="card les ${cur?'cur':''} ${x.st=='x'?'cx':''}" style="--i:${i}"><b class=num>${i+1}</b><div><div class=sb>${e(x.s)}${BD(x,dt)}</div><small>${x.st=='s'&&x.old&&x.old!=x.s?'замість '+e(x.old)+' · ':''}${e(tch(x.s))}</small>${x.st=='x'?'':H(dt,x.s)}${JN(x)}</div><div class=rt><span class=room>${x.on?'онлайн':x.r?'каб. '+e(x.r):''}</span><small>${e(b.a)}${b.a?'–':''}${e(b.b)}</small>${MB(x)}</div><div class=ic style="--h:${h}">${ico(ik)}</div></div>`}).join(''):'<p class=mut>Уроків немає 🎉</p>');
+ (L.length?L.map((x0,i)=>{const x=eff(dt,i,x0),b={a:x.ta||'',b:x.tb||''},cur=td&&b.a&&x.st!='x'&&m>=mm(b.a)&&m<mm(b.b),[,ik,h]=sic(x.s);if(x.gs&&x.st!='x')return SC(x,i,b,cur,dt);return `<div class="card les ${cur?'cur':''} ${x.st=='x'?'cx':''}" style="--i:${i}"><b class=num>${i+1}</b><div><div class=sb>${e(x.s)}${BD(x,dt)}</div><small>${x.st=='s'&&x.old&&x.old!=x.s?'замість '+e(x.old)+' · ':''}${e(tch(x.s))}</small>${x.st=='x'?'':H(dt,x.s)}${JN(x)}</div><div class=rt><span class=room>${x.on?'онлайн':x.r?'каб. '+e(x.r):''}</span><small>${e(b.a)}${b.a?'–':''}${e(b.b)}</small>${MB(x)}</div><div class=ic style="--h:${h}">${ico(ik)}</div></div>`}).join(''):'<p class=mut>Уроків немає 🎉</p>');
 }
+function SC(x,i,b,cur,dt){
+ const half=(g,j)=>{const[,ik,h]=sic(g.s),hw=(D.hw||{})[iso(dt)+'|'+x.s+'#'+(j+1)];
+  return `<div class=gh style="--h:${h}"><div class=gt><span class=gn>${j+1} група</span><span class=ic style="--h:${h};width:26px;height:26px;border-radius:8px">${ico(ik)}</span></div>${g.s!=x.s?`<div class=sb style="font-size:14px">${e(g.s)}</div>`:''}<small>${e(g.t||tch(g.s))}</small>${g.r?`<div class=gr><span class=room>${x.on?'онлайн':'каб. '+e(g.r)}</span>${x.on?'':`<button class=mbtn style="margin:0" onclick="event.stopPropagation();goMap('${e(g.r)}')">${ico('map')}</button>`}</div>`:''}${hw?`<div class=hw>${ico('pen')}<span>${e(hw)}</span></div>`:''}</div>`};
+ return `<div class="card les2 ${cur?'cur':''}" style="--i:${i}"><div class=l2h><b class=num>${i+1}</b><div class=sb>${e(x.s)}${BD(x,dt)}</div><small>${e(b.a)}${b.a?'–':''}${e(b.b)}</small></div><div class=gp>${x.gs.map(half).join('')}</div>${JN(x)}</div>`}
 function vHw(){
  const t0=iso(new Date()),g={};
  Object.entries(D.hw).forEach(([k,v])=>{const[d,x]=k.split('|');if(d>=t0&&v)(g[d]=g[d]||[]).push([x,v,k])});
  const ds=Object.keys(g).sort();
- return `<h2>Домашні завдання</h2><div class=mut>Натисни на завдання, щоб відмітити виконане (це бачиш лише ти)</div>`+(ds.length?ds.map(d=>{const dd=new Date(d+'T00:00');return `<h3>${WD[(dd.getDay()+6)%7]}, ${fd(dd)}</h3>`+g[d].map(([x,v,k],i)=>{const[,ik,h]=sic(x),dn=localStorage.getItem('hd'+k);return `<div class="card les ${dn?'dn':''}" style="--i:${i}" data-k="${e(k)}" onclick="hdn(this.dataset.k)"><div class=ic style="--h:${h}">${ico(ik)}</div><div><div class=sb>${e(x)}</div><small>${e(v)}</small></div><div class=rt><span class=chk>${dn?ico('chk'):''}</span></div></div>`}).join('')}).join(''):'<p class=mut>Домашки немає 🎉</p>');
+ return `<h2>Домашні завдання</h2><div class=mut>Натисни на завдання, щоб відмітити виконане (це бачиш лише ти)</div>`+(ds.length?ds.map(d=>{const dd=new Date(d+'T00:00');return `<h3>${WD[(dd.getDay()+6)%7]}, ${fd(dd)}</h3>`+g[d].map(([x,v,k],i)=>{const gn=(x.match(/#(\d)$/)||[])[1],xs=x.replace(/#\d$/,''),[,ik,h]=sic(xs),dn=localStorage.getItem('hd'+k);return `<div class="card les ${dn?'dn':''}" style="--i:${i}" data-k="${e(k)}" onclick="hdn(this.dataset.k)"><div class=ic style="--h:${h}">${ico(ik)}</div><div><div class=sb>${e(xs)}${gn?' · '+gn+' група':''}</div><small>${e(v)}</small></div><div class=rt><span class=chk>${dn?ico('chk'):''}</span></div></div>`}).join('')}).join(''):'<p class=mut>Домашки немає 🎉</p>');
 }
 function hdn(k){localStorage.getItem('hd'+k)?localStorage.removeItem('hd'+k):localStorage.setItem('hd'+k,1);V()}
 function defFloors(){
@@ -201,15 +210,15 @@ function defFloors(){
  return[fl('1 поверх',L1,R1),fl('2 поверх',L2,R2),fl('3 поверх',L3,R)];
 }
 let sv='t',mc=-1,mq='',mi=-1;const VWS={},PT=new Map();let GS=null;
-const rmI=n=>{const t=n?D.teachers.filter(x=>x.r&&x.r==n):[],l=[];if(n)D.schedule.forEach((day,w)=>day.forEach((x,i)=>{if(x.r==n)l.push({w,i,s:x.s})}));return{t,l}};
+const rmI=n=>{const t=n?D.teachers.filter(x=>x.r&&x.r==n):[],l=[];if(n)D.schedule.forEach((day,w)=>day.forEach((x,i)=>{if(x.g){x.g.forEach(g=>{if(g.r==n)l.push({w,i,s:g.s||x.s})})}else if(x.r==n)l.push({w,i,s:x.s})}));return{t,l}};
 const cut=(s,n)=>s.length>n?s.slice(0,n-1)+'…':s;
 const bestFloor=()=>{let b=D.fl.length-1,m=0;D.fl.forEach((F,i)=>{const c=F.rooms.filter(r=>r.n&&rmI(r.n).l.length).length;if(c>m){m=c;b=i}});return b};
 function mmatch(r,q){if(!q)return false;const f=rmI(r.n);return String(r.n).toLowerCase().includes(q)||(r.t||'').toLowerCase().includes(q)||f.t.some(t=>(t.n+' '+ts(t).join(' ')).toLowerCase().includes(q))}
 function mapSVG(F,ed){
- const o=NI(),cur=!ed&&o.t=='cur'?o.cur.r:'',nxr=!ed&&o.nx?o.nx.r:'',q=ed?'':mq.trim().toLowerCase(),P='stp'+(ed?'e':'v');
+ const o=NI(),cur=!ed&&o.t=='cur'?RS(o.cur):[],nxr=!ed&&o.nx?RS(o.nx):[],q=ed?'':mq.trim().toLowerCase(),P='stp'+(ed?'e':'v');
  return `<svg class="msv ${ed?'ed':''}"><defs><pattern id=${P} width=10 height=10 patternUnits=userSpaceOnUse><rect width=10 height=10 fill="#151a28" /><path d="M0 5h10" class=stl /></pattern></defs><g class=vg>${F.rooms.map((r,i)=>{
   const f=rmI(r.n),th=f.t[0],hue=f.l.length?sic(f.l[0].s)[2]:th&&ts(th)[0]?sic(ts(th)[0])[2]:null,
-  cl=['rm',r.k=='s'?'st':r.k=='x'?'xx':r.k=='h'?'h':r.k=='c'?'cr':'',hue!==null?'hv':'',f.l.length?'mine':'',cur&&r.n==cur?'now':'',nxr&&r.n==nxr&&cur!=r.n?'nxt':'',mmatch(r,q)?'mt':'',ed&&i==mi?'sel':''].join(' '),
+  cl=['rm',r.k=='s'?'st':r.k=='x'?'xx':r.k=='h'?'h':r.k=='c'?'cr':'',hue!==null?'hv':'',f.l.length?'mine':'',r.n&&cur.includes(r.n)?'now':'',r.n&&nxr.includes(r.n)&&!cur.includes(r.n)?'nxt':'',mmatch(r,q)?'mt':'',ed&&i==mi?'sel':''].join(' '),
   lab=r.k=='c'?'':r.k=='s'?'Сходи':(r.n||r.t||''),fs=Math.max(9,Math.min(22,Math.floor(r.w*1.5/Math.max(1,lab.length)),Math.floor(r.h*.5))),
   sub=r.k=='s'?'':th?cut(th.n.trim().split(' ')[0],Math.max(4,Math.floor(r.w/7)))+(f.t.length>1?' +'+(f.t.length-1):''):(r.n&&r.t?cut(r.t,Math.max(4,Math.floor(r.w/7))):'');
   return {k:r.k,s:`<g class="${cl}" data-i=${i} transform="translate(${r.x} ${r.y})" style="--h:${hue===null?220:hue}"><rect class=fl width=${r.w} height=${r.h} rx=6 ${r.k=='s'?`style="fill:url(#${P})"`:''} />${(r.k=='r'||r.k=='h')&&r.d?`<rect class=dr x=${r.d=='l'?-3:r.d=='r'?r.w-3:r.w/2-16} y=${r.d=='u'?-3:r.d=='d'?r.h-3:r.h/2-16} width=${r.d=='l'||r.d=='r'?6:32} height=${r.d=='l'||r.d=='r'?32:6} />`:''}<g transform="translate(${r.w/2} ${r.h/2})"><g class=lr><text class=rn x=0 y=${sub?-8:0} dy=".35em" style="font-size:${r.k=='s'?14:fs}px">${e(lab)}</text>${sub?`<text class=rs x=0 y=16 dy=".35em">${e(sub)}</text>`:''}</g></g></g>`}}).sort((a,b)=>(b.k=='c')-(a.k=='c')).map(x=>x.s).join('')}</g></svg>`;
@@ -253,8 +262,8 @@ function pend(ev){
 document.addEventListener('pointerup',pend);document.addEventListener('pointercancel',pend);
 document.addEventListener('wheel',ev=>{const s=ev.target.closest&&ev.target.closest('svg.msv');if(!s||!s._v)return;ev.preventDefault();const b=s.getBoundingClientRect();const dd=ev.deltaY||ev.deltaX;if(ev.shiftKey)rotateAt(s,ev.clientX-b.left,ev.clientY-b.top,-dd*.004);else zoomAt(s,ev.clientX-b.left,ev.clientY-b.top,Math.exp(-dd*.0018))},{passive:false});
 /* перегляд */
-function mpl(){const o=NI(),rr=o.t=='cur'?o.cur.r:'';return D.fl.map((F,i)=>`<button class="pill ${i==mc?'on':''}" onclick="mfs(${i})">${e(F.n)}${rr&&F.rooms.some(r=>r.n==rr)?' ●':''}</button>`).join('')}
-const RB=x=>`<button class=jn onclick="goMap('${e(x.r)}')">${ico('map')}Куди йти далі?</button>`;
+function mpl(){const o=NI(),rr=o.t=='cur'?RS(o.cur):[];return D.fl.map((F,i)=>`<button class="pill ${i==mc?'on':''}" onclick="mfs(${i})">${e(F.n)}${rr.some(n=>F.rooms.some(r=>r.n==n))?' ●':''}</button>`).join('')}
+const RB=x=>x.gs?x.gs.map((g,j)=>g.r?`<button class=jn onclick="goMap('${e(g.r)}')">${ico('map')}Куди йти · ${j+1} група</button>`:'').join(''):`<button class=jn onclick="goMap('${e(x.r)}')">${ico('map')}Куди йти далі?</button>`;
 function vMap(){
  if(mc<0||mc>=D.fl.length)mc=bestFloor();
  return `<h2>Карта школи</h2><div class=mut>Рухай, масштабуй і крути карту двома пальцями. Торкнись кімнати — побачиш деталі. На ПК: колесо — масштаб, Shift + колесо — поворот.</div><div class=pills id=mfl>${mpl()}</div><div class=mtl><input id=mq placeholder="Знайти кабінет або вчителя" value="${e(mq)}" oninput="mq=this.value;msearch()"><button onclick="mzb(1.4)">+</button><button onclick="mzb(.7)">−</button><button onclick="mfit()" style="width:auto;padding:0 12px;font-size:14px">Все</button></div><div class=mapc id=mapc>${mapSVG(D.fl[mc])}</div><div class=mut>Зелена рамка — де йде урок, синя пунктирна — де наступний. Кольором підсвічені кабінети з уроками вашого класу, а підписи вчителів з’являються при наближенні.</div>`;
@@ -330,11 +339,13 @@ const eff=(d,i,x)=>{const k=iso(d)+'|'+i,o=(D.sub||{})[k],v=(D.ov||{})[k]||{},b=
  const r=o?(o.k=='x'?{...x,st:'x'}:{s:o.s||x.s,r:o.r||x.r,st:'s',old:x.s}):{...x,st:''};
  r.on=v.on!==undefined&&v.on!==''?!!+v.on:!!x.o;r.l=v.l||x.l||'';r.ta=b.a;r.tb=b.b;
  if(v.t&&b.a){const du=mm(b.b)-mm(b.a);r.ta=v.t;r.tb=hm(mm(v.t)+du);r.mv=1}
- return r};
+ r.gs=x.g&&x.g.length==2&&!(o&&o.k=='s')?x.g.map(g=>({s:g.s||x.s,t:g.t||'',r:g.r||''})):null;if(r.gs)r.r='';return r};
 const ok2=u=>/^https?:/.test(u||'')?e(u):'#';
 const JN=x=>x.on&&x.l&&x.st!='x'?`<a class=jn target=_blank rel=noopener href="${ok2(x.l)}">${ico('vid')}Приєднатись</a>`:'';
 const aLive=a=>{if(!a.d)return true;const n=new Date(),t=iso(n),hh=pad(n.getHours())+':'+pad(n.getMinutes());return a.d>t||(a.d==t&&(!a.h||a.h>hh))};
 const ANN=()=>{return D.an.filter(a=>a.t&&aLive(a)).map((a,i)=>`<div class=an style="--i:${i}">${ico('alr')}<span>${e(a.t)}</span></div>`).join('')};
+const RS=x=>x.gs?x.gs.map(g=>g.r).filter(Boolean):(x.r?[x.r]:[]);
+const GW=x=>x.gs.map((g,j)=>`<div>${j+1} група${g.s!=x.s?' · '+e(g.s):''}${g.r?' · каб. '+e(g.r):''}${g.t?' · '+e(g.t):''}</div>`).join('');
 const BD=(x,dt)=>(x.on&&x.st!='x'?'<span class="bd o">Онлайн</span>':'')+(x.mv&&x.st!='x'?'<span class="bd m">Перенесено</span>':'')+(x.st=='x'?'<span class="bd x">Скасовано</span>':x.st=='s'?'<span class="bd s">Заміна</span>':'')+(x.st!='x'&&D.ex.some(q=>q.d==iso(dt)&&q.s==x.s)?'<span class="bd e">Контрольна</span>':'');
 function NI(){
  const n=new Date(),w=(n.getDay()+6)%7,m=n.getHours()*60+n.getMinutes()+n.getSeconds()/60;
@@ -355,10 +366,10 @@ function wd(){
  else if(o.t=='end'){const d=new Date();let k=0;do{d.setDate(d.getDate()+1);k++}while(d.getDay()%6==0);const f=(D.schedule[(d.getDay()+6)%7]||[])[0],n=Object.keys(D.hw).filter(q=>q.startsWith(iso(d)+'|')&&D.hw[q]).length;
   b=sm('chk','Уроки закінчились','Гарного вечора',`${f?(k==1?'Завтра':WD[(d.getDay()+6)%7])+' о '+((D.bells[0]||{}).a||'')+': '+e(f.s):''}${n?' · ДЗ: '+n:''}`)}
  else if(o.t=='cur'){const c=o.cur,s0=mm(c.b.a),en=mm(c.b.b),[bg,u]=lf(en-o.m);
-  b=`<div class=wdi>${rg((o.m-s0)/(en-s0),bg,u)}<div><div class=wl>Зараз · ${c.i+1} урок${c.st=='s'?' · заміна':''}</div><div class=wt>${e(c.s)}</div><div class=ws>${[c.on?'онлайн':c.r?'каб. '+e(c.r):'',e(tch(c.s))].filter(Boolean).join(' · ')}</div>${JN(c)}</div></div><div class=wf>${o.nx?`Далі: <b>${e(o.nx.s)}</b> о ${o.nx.b.a}${o.nx.on?' · онлайн':o.nx.r?' · каб. '+e(o.nx.r):''}`:'Це останній урок на сьогодні'}</div>`}
+  b=`<div class=wdi>${rg((o.m-s0)/(en-s0),bg,u)}<div><div class=wl>Зараз · ${c.i+1} урок${c.st=='s'?' · заміна':''}</div><div class=wt>${e(c.s)}</div><div class=ws>${c.gs?GW(c):[c.on?'онлайн':c.r?'каб. '+e(c.r):'',e(tch(c.s))].filter(Boolean).join(' · ')}</div>${JN(c)}</div></div><div class=wf>${o.nx?`Далі: <b>${e(o.nx.s)}</b> о ${o.nx.b.a}${o.nx.gs?' · 2 групи':o.nx.on?' · онлайн':o.nx.r?' · каб. '+e(o.nx.r):''}`:'Це останній урок на сьогодні'}</div>`}
  else{const nx=o.nx,s0=o.pv?mm(o.pv.b.b):mm(nx.b.a)-60,en=mm(nx.b.a),[bg,u]=lf(en-o.m);
-  b=`<div class=wdi>${rg((o.m-s0)/(en-s0),bg,u)}<div><div class=wl>${o.t=='brk'?'Перерва':'Скоро уроки'}</div><div class=wt>Далі: ${e(nx.s)}</div><div class=ws>о ${nx.b.a}${nx.on?' · онлайн':nx.r?' · каб. '+e(nx.r):''}</div>${JN(nx)}</div></div>`}
- return b+((o.nx&&o.nx.r&&!o.nx.on)?`<div class=wc>${RB(o.nx)}</div>`:'')+((o.cx||o.sb)?`<div class=wc>${o.cx?`<span class=chip style="--h:5">Скасовано: ${o.cx}</span>`:''}${o.sb?`<span class=chip style="--h:40">Заміни: ${o.sb}</span>`:''}</div>`:'');
+  b=`<div class=wdi>${rg((o.m-s0)/(en-s0),bg,u)}<div><div class=wl>${o.t=='brk'?'Перерва':'Скоро уроки'}</div><div class=wt>Далі: ${e(nx.s)}</div><div class=ws>о ${nx.b.a}${nx.gs?'':nx.on?' · онлайн':nx.r?' · каб. '+e(nx.r):''}</div>${nx.gs?`<div class=ws>${GW(nx)}</div>`:''}${JN(nx)}</div></div>`}
+ return b+((o.nx&&RS(o.nx).length&&!o.nx.on)?`<div class=wc>${RB(o.nx)}</div>`:'')+((o.cx||o.sb)?`<div class=wc>${o.cx?`<span class=chip style="--h:5">Скасовано: ${o.cx}</span>`:''}${o.sb?`<span class=chip style="--h:40">Заміни: ${o.sb}</span>`:''}</div>`:'');
 }
 function exStrip(){
  const t0=iso(new Date()),lm=new Date();lm.setDate(lm.getDate()+21);const l=iso(lm),a=D.ex.filter(q=>q.d>=t0&&q.d<=l&&q.s).sort((x,y)=>x.d<y.d?-1:1);
@@ -381,7 +392,7 @@ function chk(){if($('#pw').value==='admin123'){adm=1;A()}else{const m=$('.mc');m
 const get=p=>p.split('.').reduce((o,k)=>o[k],D);
 function setp(p,v){const k=p.split('.'),l=k.pop();k.reduce((o,x)=>o[x],D)[l]=v}
 const blank=p=>p.startsWith('schedule')?{s:'',r:''}:{bells:{a:'',b:''},teachers:{n:'',s:[],r:'',p:''},books:{t:'',u:'',p:''},files:{t:'',u:''},ex:{d:iso(new Date()),s:'',t:''},an:{t:'',d:iso(new Date()),h:''}}[p];
-function rows(p,f,ph){return get(p).map((r,i)=>`<div class=rc>${ph?`<label class=ph>${r.p?`<img src="${e(r.p)}" alt="">`:ico('cam')}<input type=file accept="image/*" hidden onchange="pic(this,'${p}.${i}.p')"></label>`:''}${f.map(([k,ph,t])=>t=='pick'?PK(p,i,k,r,ph):t=='multi'?MS(p,i,k,r):t=='onl'?OL(p,i,r):`<input data-p="${p}.${i}.${k}" type="${t||'text'}" placeholder="${ph}" value="${e(r[k])}">`).join('')}<button class=x onclick="del('${p}',${i})">✕</button></div>`).join('')+`<button class=add onclick="add('${p}')">+ Додати</button>`}
+function rows(p,f,ph){return get(p).map((r,i)=>`<div class=rc>${ph?`<label class=ph>${r.p?`<img src="${e(r.p)}" alt="">`:ico('cam')}<input type=file accept="image/*" hidden onchange="pic(this,'${p}.${i}.p')"></label>`:''}${f.map(([k,ph,t])=>t=='pick'?PK(p,i,k,r,ph):t=='multi'?MS(p,i,k,r):t=='onl'?OL(p,i,r):t=='grp'?GR(p,i,r):`<input data-p="${p}.${i}.${k}" type="${t||'text'}" placeholder="${ph}" value="${e(r[k])}">`).join('')}<button class=x onclick="del('${p}',${i})">✕</button></div>`).join('')+`<button class=add onclick="add('${p}')">+ Додати</button>`}
 function pic(i,p){const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const m=new Image();m.onload=()=>{const k=Math.min(1,260/Math.max(m.width,m.height)),c=document.createElement('canvas');c.width=m.width*k;c.height=m.height*k;c.getContext('2d').drawImage(m,0,0,c.width,c.height);setp(p,c.toDataURL('image/jpeg',.78));A();R()};m.src=r.result};r.readAsDataURL(f)}
 const CAT=[['Мови та література',['Українська мова','Українська література','Англійська мова','Німецька мова','Зарубіжна література']],['Математика та інформатика',['Математика','Алгебра','Геометрія','Інформатика']],['Природничі науки',['Фізика','Хімія','Біологія','Географія','Природознавство']],['Суспільні науки',['Історія України','Всесвітня історія','Громадянська освіта','Економіка']],['Мистецтво, спорт, інше',['Фізкультура','Музичне мистецтво','Образотворче мистецтво','Технології','Захист України']]];
 const PK=(p,i,k,r,ph)=>{const v=r[k],c=sic(v);return `<button class=pk onclick="pk('${p}.${i}.${k}')">${v?`<span class=ic style="--h:${c[2]}">${ico(c[1])}</span>${e(v)}`:`<span class=mut style="margin:0">${ph}</span>`}</button>`};
@@ -393,11 +404,13 @@ function pc(p){const n=$('#cs').value.trim()||(pm?'':get(p));if(!n)return;if(pI)
 const MS=(p,i,k,r)=>`<div class=subs>${r[k].map((v,j)=>{const c=sic(v);return `<span class=chip style="--h:${c[2]}">${ico(c[1])}${e(v)}<b onclick="rmS('${p}.${i}.${k}',${j})">×</b></span>`}).join('')}<button class=chip onclick="pk('${p}.${i}.${k}',1)">+ Предмет</button></div>`;
 function rmS(p,j){get(p).splice(j,1);A();R()}
 function orph(L){
- const ob=Object.keys(D.hw).filter(k=>k.startsWith(hdt+'|')&&!L.some(x=>hdt+'|'+x.s==k)),all=Object.keys(D.hw).length;
+ const ob=Object.keys(D.hw).filter(k=>k.startsWith(hdt+'|')&&!L.some(x=>hdt+'|'+x.s==k||x.g&&(k==hdt+'|'+x.s+'#1'||k==hdt+'|'+x.s+'#2'))),all=Object.keys(D.hw).length;
  return (ob.length?`<h3>Записи без уроку в цей день</h3><div class=mut>Лишились після зміни розкладу — можна видалити</div>`+ob.map(k=>`<div class=row><div class=pk style="cursor:default"><span><b>${e(k.split('|')[1])}</b><br><small>${e(D.hw[k])}</small></span></div><button class=x data-k="${e(k)}" onclick="hwx(this.dataset.k)">✕</button></div>`).join(''):'')+(all?`<button class=add style="margin-top:14px" onclick="if(confirm('Видалити ВСЕ домашнє завдання?')){D.hw={};A();R()}">Очистити всі ДЗ (${all})</button>`:'');
 }
 function hwx(k){delete D.hw[k];A();R()}
 const OL=(p,i,r)=>`<button class="chip ${r.o?'ol':''}" onclick="tgo('${p}.${i}')">${ico('vid')}${r.o?'Дистанційно ✓':'Дистанційно'}</button>${r.o?`<input data-p="${p}.${i}.l" placeholder="Посилання Zoom / Meet" value="${e(r.l||'')}" style="flex:1 1 100%">`:''}`;
+const GR=(p,i,r)=>`<button class="chip ${r.g?'ol':''}" onclick="tgg('${p}.${i}')">${r.g?'2 групи ✓':'2 групи'}</button>`+(r.g?r.g.map((g,j)=>`<div class=gedit style="flex:1 1 100%"><span class=gn>${j+1} група</span><div class=row><button class=pk onclick="pk('${p}.${i}.g.${j}.s')">${g.s?e(g.s):'<span class=mut style="margin:0">Предмет (як вище)</span>'}</button></div><div class=row><input data-p="${p}.${i}.g.${j}.t" placeholder="Вчитель групи" value="${e(g.t||'')}"><input data-p="${p}.${i}.g.${j}.r" placeholder="Каб." value="${e(g.r||'')}" style="max-width:100px"></div></div>`).join(''):'');
+function tgg(p){const x=get(p);if(x.g)delete x.g;else x.g=[{s:'',t:'',r:x.r||''},{s:'',t:'',r:''}];A();R()}
 function tgo(p){const x=get(p);x.o=x.o?0:1;A();R()}
 function OV(k,x,i){const v=D.ov[k]||{},on=eff(new Date(hdt+'T00:00'),i,x).on;
  return `<div class=seg style="margin-top:8px">${[['','Як у розкладі'],['1','Дистанційно'],['0','У школі']].map(([a,n])=>`<button class="${(v.on===undefined?'':String(v.on))==a?'on':''}" onclick="ovs('${k}','on','${a}')">${n}</button>`).join('')}</div><div class=row style="margin-top:8px"><span class=mut style="margin:0;flex:none">Перенесено на</span><input type=time value="${e(v.t||'')}" oninput="ovs('${k}','t',this.value,1)" style="max-width:130px">${on?`<input placeholder="Інше посилання (необов’язково)" value="${e(v.l||'')}" oninput="ovs('${k}','l',this.value,1)">`:''}</div>`}
@@ -413,6 +426,8 @@ function ibv(){
 }
 async function ibdel(id){try{await fetch(fbu()+'/ideas/'+id+'.json',{method:'DELETE'})}catch(_){}ibLoad()}
 function hdd(n){const d=new Date(hdt+'T00:00');do d.setDate(d.getDate()+n);while(d.getDay()%6==0);hdt=iso(d);A()}
+const HWR=x=>{const[,ik,h]=sic(x.s),one=(k,l)=>`<div class=row>${l?`<span class=gn style="flex:none;width:64px">${l}</span>`:''}<input data-k="${e(k)}" placeholder="Що задали…" value="${e(D.hw[k]||'')}" oninput="hws(this)"><button class=x data-k="${e(k)}" onclick="hwx(this.dataset.k)">✕</button></div>`;
+ return `<div class=hwr><div class=pk style="cursor:default"><span class=ic style="--h:${h}">${ico(ik)}</span>${e(x.s)}${x.g?' · 2 групи':''}</div>${x.g?one(hdt+'|'+x.s+'#1','1 група')+one(hdt+'|'+x.s+'#2','2 група'):one(hdt+'|'+x.s,'')}</div>`};
 function hws(el){const v=el.value.trim(),k=el.dataset.k;if(v)D.hw[k]=v;else delete D.hw[k];clearTimeout(window._rt);window._rt=setTimeout(R,400)}
 function pruneHw(){const t=new Date();t.setDate(t.getDate()-3);const c=iso(t);Object.keys(D.hw).forEach(k=>{if(k.split('|')[0]<c)delete D.hw[k]});Object.keys(D.sub).forEach(k=>{if(k.split('|')[0]<c)delete D.sub[k]});D.ex=D.ex.filter(q=>!q.d||q.d>=c);Object.keys(D.ov).forEach(k=>{if(k.split('|')[0]<c)delete D.ov[k]});D.an=D.an.filter(a=>!a.d||a.d>=c)}
 function add(p){get(p).push(blank(p));A();R()}
@@ -425,8 +440,8 @@ function AB(){
  if(at=='sb'){const d=new Date(hdt+'T00:00'),w=(d.getDay()+6)%7,L=D.schedule[w]||[];
   return `<div class=mut>Обери день і познач, що змінилось.</div><div class=pills><button class=pill onclick="hdd(-1)">‹</button><button class="pill on" style="flex:4">${WD[w]}, ${fd(d)}</button><button class=pill onclick="hdd(1)">›</button></div>`+(L.length?L.map((x,i)=>{const k=hdt+'|'+i,o=D.sub[k]||{},st=o.k||'',[,ik,h]=sic(o.s||x.s);return `<div class=rc style="display:block"><div class=pk style="cursor:default;margin-bottom:8px"><span class=ic style="--h:${h}">${ico(ik)}</span><span><b>${i+1}.</b> ${e(x.s)}</span></div><div class=seg><button class="${st?'':'on'}" onclick="sbs('${k}','')">За розкладом</button><button class="x ${st=='x'?'on':''}" onclick="sbs('${k}','x')">Скасовано</button><button class="${st=='s'?'on':''}" onclick="sbs('${k}','s')">Заміна</button></div>${st=='s'?`<div class=row style="margin-top:8px"><button class=pk onclick="pk('sub.${k}.s')">${o.s?e(o.s):'<span class=mut style="margin:0">Що замість…</span>'}</button><input data-p="sub.${k}.r" placeholder="Каб." value="${e(o.r||'')}" style="max-width:110px"></div>`:''}${OV(k,x,i)}</div>`}).join(''):'<p class=mut>У цей день уроків немає</p>')}
  if(at=='hw'){const d=new Date(hdt+'T00:00'),w=(d.getDay()+6)%7,L=D.schedule[w]||[];
-  return `<div class=mut>Обери день і впиши, що задали. Порожнє поле — ДЗ немає.</div><div class=pills><button class=pill onclick="hdd(-1)">‹</button><button class="pill on" style="flex:4">${WD[w]}, ${fd(d)}</button><button class=pill onclick="hdd(1)">›</button></div>`+(L.length?L.map(x=>{const[,ik,h]=sic(x.s);return `<div class=hwr><div class=pk style="cursor:default"><span class=ic style="--h:${h}">${ico(ik)}</span>${e(x.s)}</div><div class=row><input data-k="${e(hdt+'|'+x.s)}" placeholder="Що задали…" value="${e(D.hw[hdt+'|'+x.s]||'')}" oninput="hws(this)"><button class=x data-k="${e(hdt+'|'+x.s)}" onclick="hwx(this.dataset.k)">✕</button></div></div>`}).join(''):'<p class=mut>У цей день уроків немає</p>')+orph(L)}
- if(at=='sch')return DN.map((d,i)=>`<h3>${d}</h3>`+rows('schedule.'+i,[['s','Обрати предмет','pick'],['r','Каб.'],['o','','onl']])).join('');
+  return `<div class=mut>Обери день і впиши, що задали. Порожнє поле — ДЗ немає.</div><div class=pills><button class=pill onclick="hdd(-1)">‹</button><button class="pill on" style="flex:4">${WD[w]}, ${fd(d)}</button><button class=pill onclick="hdd(1)">›</button></div>`+(L.length?L.map(HWR).join(''):'<p class=mut>У цей день уроків немає</p>')+orph(L)}
+ if(at=='sch')return DN.map((d,i)=>`<h3>${d}</h3>`+rows('schedule.'+i,[['s','Обрати предмет','pick'],['r','Каб.'],['o','','onl'],['g','','grp']])).join('');
  if(at=='bel')return rows('bells',[['a','Початок','time'],['b','Кінець','time']]);
  if(at=='tea')return rows('teachers',[['n','Прізвище та ім’я'],['s','Предмети','multi'],['r','Каб.']],1);
  if(at=='bk')return rows('books',[['t','Назва підручника'],['u','Посилання https://…']],1);
