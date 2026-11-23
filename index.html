@@ -141,6 +141,15 @@ button.jn{border:0;font:inherit;font-size:13px;font-weight:700;cursor:pointer;ma
 .gp{display:grid;grid-template-columns:1fr 1fr;gap:8px}.gh{background:hsl(var(--h,220) 40% 50%/.09);border:1px solid hsl(var(--h,220) 50% 55%/.28);border-radius:14px;padding:10px;min-width:0}
 .gt{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.gn{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--m)}.gh small{display:block;color:var(--m)}.gr{display:flex;align-items:center;gap:6px;margin-top:6px}
 .gedit{background:var(--c2);border-radius:12px;padding:8px}.gedit .row{margin:6px 0 0}
+.alr{position:relative;display:flex;align-items:center;gap:12px;margin:0 0 14px;padding:11px 14px;border-radius:16px;font-size:14px;animation:up .4s both}
+.alr>div{flex:1;min-width:0}.alr b{display:block;font-size:15px;line-height:1.25}.alr small{display:block;font-size:12px;opacity:.85;margin-top:1px}
+.alr>span{font-weight:800;font-size:19px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.alr i{width:11px;height:11px;border-radius:50%;flex:none;background:currentColor;animation:alp 1.6s infinite}
+@keyframes alp{0%{box-shadow:0 0 0 0 currentColor}70%,100%{box-shadow:0 0 0 9px transparent}}
+.alr.r{background:#ff3b4a26;border:1px solid #ff5b6a70;color:#ff8a94}.alr.r b{color:#ffe1e4}
+.alr.y{background:#ffc23d1c;border:1px solid #ffc23d5c;color:#ffd36b}.alr.y b{color:#fff0c9}
+.alr.g{background:#3ddc9718;border:1px solid #3ddc9744;color:#5ff0b0}.alr.g b{color:#d6ffec}.alr.g i{animation:none}
+.wd:has(.alr.r){border-color:#ff5b6a80;box-shadow:0 10px 40px #ff3b4a22}.wd:has(.alr.y){border-color:#ffc23d66}
 @media(min-width:700px){#app{padding-top:10px}h2{font-size:32px}.cdn{font-size:110px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -390,8 +399,30 @@ function wd(){
   b=`<div class=wdi>${rg((o.m-s0)/(en-s0),bg,u)}<div><div class=wl>Зараз · ${c.i+1} урок${c.st=='s'?' · заміна':''}</div><div class=wt>${e(c.s)}</div><div class=ws>${c.gs?GW(c):[c.on?'онлайн':c.r?'каб. '+e(c.r):'',e(tch(c.s))].filter(Boolean).join(' · ')}</div>${JN(c)}</div></div><div class=wf>${o.nx?`Далі: <b>${e(o.nx.s)}</b> о ${o.nx.b.a}${o.nx.gs?' · 2 групи':o.nx.on?' · онлайн':o.nx.r?' · каб. '+e(o.nx.r):''}`:'Це останній урок на сьогодні'}</div>`}
  else{const nx=o.nx,s0=o.pv?mm(o.pv.b.b):mm(nx.b.a)-60,en=mm(nx.b.a),[bg,u]=lf(en-o.m);
   b=`<div class=wdi>${rg((o.m-s0)/(en-s0),bg,u)}<div><div class=wl>${o.t=='brk'?'Перерва':'Скоро уроки'}</div><div class=wt>Далі: ${e(nx.s)}</div><div class=ws>о ${nx.b.a}${nx.gs?'':nx.on?' · онлайн':nx.r?' · каб. '+e(nx.r):''}</div>${nx.gs?`<div class=ws>${GW(nx)}</div>`:''}${JN(nx)}</div></div>`}
- return b+((o.nx&&RS(o.nx).length&&!o.nx.on)?`<div class=wc>${RB(o.nx)}</div>`:'')+((o.cx||o.sb)?`<div class=wc>${o.cx?`<span class=chip style="--h:5">Скасовано: ${o.cx}</span>`:''}${o.sb?`<span class=chip style="--h:40">Заміни: ${o.sb}</span>`:''}</div>`:'');
+ return ALR()+b+((o.nx&&RS(o.nx).length&&!o.nx.on)?`<div class=wc>${RB(o.nx)}</div>`:'')+((o.cx||o.sb)?`<div class=wc>${o.cx?`<span class=chip style="--h:5">Скасовано: ${o.cx}</span>`:''}${o.sb?`<span class=chip style="--h:40">Заміни: ${o.sb}</span>`:''}</div>`:'');
 }
+// Повітряні тривоги: дані з Cloudflare Worker (worker/alerts-worker.js), адреса — D.al в адмінці.
+const AL_C='м. Київ',AL_O='Київська область',ALU=()=>(D.al||'').trim().replace(/\/+$/,'');
+let AL=null,ALS={};try{ALS=JSON.parse(localStorage.getItem('als')||'{}')}catch(_){}
+async function alLoad(){
+ if(!ALU()||document.hidden)return;
+ try{const r=await fetch(ALU()+'/',{cache:'no-store'});if(!r.ok)throw 0;const j=await r.json(),now=Date.now();
+  // У області «changed» оновлюється, коли змінюються окремі громади, — тримаємо найраніший початок,
+  // якщо ми бачили цю тривогу безперервно (останнє опитування < 3 хв тому).
+  const g=n=>{const v=j.regions&&j.regions[n];if(!v||!v.t)return null;const p=ALS[n];if(v.a&&p&&p.a&&p.t<v.t&&now-p.s<18e4)v.t=p.t;v.s=now;return v};
+  AL={c:g(AL_C),o:g(AL_O),at:now};ALS={[AL_C]:AL.c,[AL_O]:AL.o};try{localStorage.setItem('als',JSON.stringify(ALS))}catch(_){}
+  tick()}catch(_){}}
+function ALR(){
+ if(!AL||Date.now()-AL.at>5*6e4)return'';
+ const{c,o}=AL,now=Date.now(),hm=t=>{const d=new Date(t);return pad(d.getHours())+':'+pad(d.getMinutes())},
+  du=t=>{const m=Math.max(0,Math.floor((now-t)/6e4));return m<60?m+' хв':Math.floor(m/60)+' год '+pad(m%60)+' хв'},
+  box=(k,t,s,v)=>`<div class="alr ${k}" role="status"><i></i><div><b>${t}</b><small>${s}</small></div><span>${v}</span></div>`;
+ if(c&&c.a)return box('r','Повітряна тривога',`Київ · з ${hm(c.t)} · пройдіть в укриття`,du(c.t));
+ if(o&&o.a)return box('y','Тривога в області',`Київська область · з ${hm(o.t)}`,du(o.t));
+ if(c&&now-c.t<20*6e4)return box('g','Відбій тривоги',`Київ · о ${hm(c.t)}`,du(c.t)+' тому');
+ return'';
+}
+setInterval(alLoad,30000);document.addEventListener('visibilitychange',alLoad);
 function exStrip(){
  const t0=iso(new Date()),lm=new Date();lm.setDate(lm.getDate()+21);const l=iso(lm),a=D.ex.filter(q=>q.d>=t0&&q.d<=l&&q.s).sort((x,y)=>x.d<y.d?-1:1);
  if(!a.length)return'';
@@ -467,7 +498,7 @@ function AB(){
  if(at=='tea')return rows('teachers',[['n','Прізвище та ім’я'],['s','Предмети','multi'],['r','Каб.']],1);
  if(at=='bk')return rows('books',[['t','Назва підручника'],['u','Посилання https://…']],1);
  if(at=='fl')return rows('files',[['t','Назва файлу'],['u','Посилання на файл']]);
- return `<h3>Клас</h3><input data-p="cls" value="${e(D.cls)}"><h3>Канікули</h3><div class=row><input data-p="hol.n" value="${e(D.hol.n)}"></div><div class=row><input data-p="hol.d" type="datetime-local" value="${e(D.hol.d)}"></div><h3>Голосування</h3><button class=add onclick="D.poll.on=D.poll.on===false;A();R()">${D.poll.on===false?'Вимкнено — натисни, щоб увімкнути':'Увімкнено — натисни, щоб вимкнути'}</button><div class=row><input data-p="poll.q" value="${e(D.poll.q)}"></div>${D.poll.opts.map((o,i)=>`<div class=row><input data-p="poll.opts.${i}" value="${e(o)}"><button class=x onclick="del('poll.opts',${i})">✕</button></div>`).join('')}<button class=add onclick="D.poll.opts.push('');A();R()">+ Варіант</button><button class=add onclick="D.poll.id=String(Date.now());VT=[];A();R();toast('Нове голосування — голоси обнулено')">Нове голосування (обнулити голоси)</button><h3>Збереження для всіх (GitHub)</h3><div class=mut>Токен зберігається лише в цьому браузері</div><input placeholder="користувач/репозиторій" value="${e(G.r)}" oninput="gh('r',this.value)"><div class=row><input placeholder="гілка (main)" value="${e(G.b)}" oninput="gh('b',this.value)"></div><input type=password placeholder="GitHub токен" value="${e(G.t)}" oninput="gh('t',this.value)"><h3>Голосування для всіх (Firebase)</h3><input data-p="fb" placeholder="https://назва-default-rtdb.firebaseio.com" value="${e(D.fb)}">`;
+ return `<h3>Клас</h3><input data-p="cls" value="${e(D.cls)}"><h3>Канікули</h3><div class=row><input data-p="hol.n" value="${e(D.hol.n)}"></div><div class=row><input data-p="hol.d" type="datetime-local" value="${e(D.hol.d)}"></div><h3>Голосування</h3><button class=add onclick="D.poll.on=D.poll.on===false;A();R()">${D.poll.on===false?'Вимкнено — натисни, щоб увімкнути':'Увімкнено — натисни, щоб вимкнути'}</button><div class=row><input data-p="poll.q" value="${e(D.poll.q)}"></div>${D.poll.opts.map((o,i)=>`<div class=row><input data-p="poll.opts.${i}" value="${e(o)}"><button class=x onclick="del('poll.opts',${i})">✕</button></div>`).join('')}<button class=add onclick="D.poll.opts.push('');A();R()">+ Варіант</button><button class=add onclick="D.poll.id=String(Date.now());VT=[];A();R();toast('Нове голосування — голоси обнулено')">Нове голосування (обнулити голоси)</button><h3>Збереження для всіх (GitHub)</h3><div class=mut>Токен зберігається лише в цьому браузері</div><input placeholder="користувач/репозиторій" value="${e(G.r)}" oninput="gh('r',this.value)"><div class=row><input placeholder="гілка (main)" value="${e(G.b)}" oninput="gh('b',this.value)"></div><input type=password placeholder="GitHub токен" value="${e(G.t)}" oninput="gh('t',this.value)"><h3>Голосування для всіх (Firebase)</h3><input data-p="fb" placeholder="https://назва-default-rtdb.firebaseio.com" value="${e(D.fb)}"><h3>Повітряні тривоги (Київ)</h3><input data-p="al" placeholder="https://alerts.назва.workers.dev" value="${e(D.al||'')}"><p class=mut>Адреса Cloudflare Worker з файлу worker/alerts-worker.js. Порожньо — плашка тривог вимкнена.</p>`;
 }
 function A(){const sc=($('.body')||{}).scrollTop||0,t=[['sch','Розклад'],['hw','ДЗ'],['sb','Заміни'],['an','Оголошення'],['ex','Контрольні'],['bel','Дзвінки'],['tea','Вчителі'],['mp','Карта'],['bk','Книги'],['fl','Файли'],['ib','Скринька'],['oth','Інше']];
  $('#adm').innerHTML=adm?`<div class=sheet><div class=sh><b>⚙️ Адмінка</b><button class=x onclick="adm=0;A()">✕</button></div><div class=pills>${t.map(([k,n])=>`<button class="pill ${k==at?'on':''}" onclick="goT('${k}')">${n}</button>`).join('')}</div><div class=body>${AB()}</div><button class=save onclick="save()">Зберегти й опублікувати</button></div>`:'';const bd=$('.body');if(bd)bd.scrollTop=sc;mapInit()}
@@ -491,7 +522,7 @@ async function save(){
  }catch(x){msg='Помилка: '+(x.message||x)}
  toast(msg);
 }
-Promise.race([fetch('data.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null),new Promise(r=>setTimeout(r,2500))]).catch(()=>null).then(j=>{if(j&&j.v>(D.v||0)){D=j;NORM();try{localStorage.setItem('cls',JSON.stringify(D))}catch(_){}}R();a2()});
+Promise.race([fetch('data.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null),new Promise(r=>setTimeout(r,2500))]).catch(()=>null).then(j=>{if(j&&j.v>(D.v||0)){D=j;NORM();try{localStorage.setItem('cls',JSON.stringify(D))}catch(_){}}R();a2();alLoad()});
 if('serviceWorker' in navigator&&isSecureContext&&!window.claude)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 (async()=>{try{if(!window.claude)return;const u=await claude.use('user'),db=await claude.use('db');if(u&&db&&!D.fb){uid=await u.id();window._db=db;db.collection('votes').onSnapshot(s=>{VT=s.docs.map(d=>d.data());live=1;if(tab=='vot'&&!adm)V()})}}catch(_){}})();
 </script>
