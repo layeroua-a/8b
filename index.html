@@ -141,7 +141,7 @@ button.jn{border:0;font:inherit;font-size:13px;font-weight:700;cursor:pointer;ma
 .gp{display:grid;grid-template-columns:1fr 1fr;gap:8px}.gh{background:hsl(var(--h,220) 40% 50%/.09);border:1px solid hsl(var(--h,220) 50% 55%/.28);border-radius:14px;padding:10px;min-width:0}
 .gt{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.gn{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--m)}.gh small{display:block;color:var(--m)}.gr{display:flex;align-items:center;gap:6px;margin-top:6px}
 .gedit{background:var(--c2);border-radius:12px;padding:8px}.gedit .row{margin:6px 0 0}
-.alr{position:relative;display:flex;align-items:center;gap:12px;margin:0 0 14px;padding:11px 14px;border-radius:16px;font-size:14px;animation:up .4s both}
+.alr{position:relative;display:flex;align-items:center;gap:12px;margin:0 0 14px;padding:11px 14px;border-radius:16px;font-size:14px}
 .alr>div{flex:1;min-width:0}.alr b{display:block;font-size:15px;line-height:1.25}.alr small{display:block;font-size:12px;opacity:.85;margin-top:1px}
 .alr>span{font-weight:800;font-size:19px;font-variant-numeric:tabular-nums;white-space:nowrap}
 .alr i{width:11px;height:11px;border-radius:50%;flex:none;background:currentColor;animation:alp 1.6s infinite}
@@ -200,7 +200,7 @@ function R(){if(tab=='vot'&&D.poll.on===false)tab='sch';
 function V(){const f={sch:vSch,hw:vHw,bel:vBel,tea:vTea,lnk:vLnk,hol:vHol,vot:vVot}[tab];const v=$('#v');if(!v)return;v.innerHTML=f();v.className='';void v.offsetWidth;v.className='in';tick();mapInit()}
 function vSch(){
  const L=D.schedule[day]||[],n=new Date(),m=n.getHours()*60+n.getMinutes(),td=day===(n.getDay()+6)%7,dt=nextDate(day);
- return `<div id=wd class=wd>${wd()}</div>${exStrip()}<h2 onclick="tap()" style="user-select:none">Розклад уроків</h2><div class=mut>${DN[day]}, ${fd(dt)}</div><div class=pills>${DS.map((d,i)=>`<button class="pill ${i==day?'on':''}" onclick="day=${i};V()">${d}</button>`).join('')}</div>`+
+ return `<div id=wd class=wd><div id=alw>${ALR()}</div><div id=wdb>${wd()}</div></div>${exStrip()}<h2 onclick="tap()" style="user-select:none">Розклад уроків</h2><div class=mut>${DN[day]}, ${fd(dt)}</div><div class=pills>${DS.map((d,i)=>`<button class="pill ${i==day?'on':''}" onclick="day=${i};V()">${d}</button>`).join('')}</div>`+
  (L.length?L.map((x0,i)=>{const x=eff(dt,i,x0),b={a:x.ta||'',b:x.tb||''},cur=td&&b.a&&x.st!='x'&&m>=mm(b.a)&&m<mm(b.b),[,ik,h]=sic(x.s);if(x.gs&&x.st!='x')return SC(x,i,b,cur,dt);return `<div class="card les ${cur?'cur':''} ${x.st=='x'?'cx':''}" style="--i:${i}"><b class=num>${i+1}</b><div><div class=sb>${e(x.s)}${BD(x,dt)}</div><small>${x.st=='s'&&x.old&&x.old!=x.s?'замість '+e(x.old)+' · ':''}${e(tch(x.s))}</small>${x.st=='x'?'':H(dt,x.s)}${JN(x)}</div><div class=rt><span class=room>${x.on?'онлайн':x.r?'каб. '+e(x.r):''}</span><small>${e(b.a)}${b.a?'–':''}${e(b.b)}</small>${MB(x)}</div><div class=ic style="--h:${h}">${ico(ik)}</div></div>`}).join(''):'<p class=mut>Уроків немає 🎉</p>');
 }
 function SC(x,i,b,cur,dt){
@@ -399,7 +399,7 @@ function wd(){
   b=`<div class=wdi>${rg((o.m-s0)/(en-s0),bg,u)}<div><div class=wl>Зараз · ${c.i+1} урок${c.st=='s'?' · заміна':''}</div><div class=wt>${e(c.s)}</div><div class=ws>${c.gs?GW(c):[c.on?'онлайн':c.r?'каб. '+e(c.r):'',e(tch(c.s))].filter(Boolean).join(' · ')}</div>${JN(c)}</div></div><div class=wf>${o.nx?`Далі: <b>${e(o.nx.s)}</b> о ${o.nx.b.a}${o.nx.gs?' · 2 групи':o.nx.on?' · онлайн':o.nx.r?' · каб. '+e(o.nx.r):''}`:'Це останній урок на сьогодні'}</div>`}
  else{const nx=o.nx,s0=o.pv?mm(o.pv.b.b):mm(nx.b.a)-60,en=mm(nx.b.a),[bg,u]=lf(en-o.m);
   b=`<div class=wdi>${rg((o.m-s0)/(en-s0),bg,u)}<div><div class=wl>${o.t=='brk'?'Перерва':'Скоро уроки'}</div><div class=wt>Далі: ${e(nx.s)}</div><div class=ws>о ${nx.b.a}${nx.gs?'':nx.on?' · онлайн':nx.r?' · каб. '+e(nx.r):''}</div>${nx.gs?`<div class=ws>${GW(nx)}</div>`:''}${JN(nx)}</div></div>`}
- return ALR()+b+((o.nx&&RS(o.nx).length&&!o.nx.on)?`<div class=wc>${RB(o.nx)}</div>`:'')+((o.cx||o.sb)?`<div class=wc>${o.cx?`<span class=chip style="--h:5">Скасовано: ${o.cx}</span>`:''}${o.sb?`<span class=chip style="--h:40">Заміни: ${o.sb}</span>`:''}</div>`:'');
+ return b+((o.nx&&RS(o.nx).length&&!o.nx.on)?`<div class=wc>${RB(o.nx)}</div>`:'')+((o.cx||o.sb)?`<div class=wc>${o.cx?`<span class=chip style="--h:5">Скасовано: ${o.cx}</span>`:''}${o.sb?`<span class=chip style="--h:40">Заміни: ${o.sb}</span>`:''}</div>`:'');
 }
 // Повітряні тривоги: дані з Cloudflare Worker (worker/alerts-worker.js), адреса — D.al в адмінці.
 const AL_C='м. Київ',AL_O='Київська область',ALU=()=>(D.al||'').trim().replace(/\/+$/,'');
@@ -428,7 +428,7 @@ function exStrip(){
  if(!a.length)return'';
  return `<div class=exs>${a.map(q=>{const dd=new Date(q.d+'T00:00'),df=Math.round((dd-new Date(t0+'T00:00'))/864e5),[,ik,h]=sic(q.s);return `<div class=exc style="--h:${h}"><span class=ic style="--h:${h}">${ico(ik)}</span><div><b>${e(q.s)}</b><small>${e(q.t||'Контрольна')}</small><small>${df==0?'сьогодні':df==1?'завтра':'через '+df+' дн.'} · ${fd(dd)}</small></div></div>`}).join('')}</div>`;
 }
-function tick(){const aw=$('#anw');if(aw){const ah=ANN();if(aw.dataset.h!==ah){if(aw.dataset.h!==undefined)aw.innerHTML=ah;aw.dataset.h=ah}}const wv=$('#wd');if(wv){const hh=wd();if(wv.dataset.h!==hh){wv.innerHTML=hh;wv.dataset.h=hh}}
+function tick(){const aw=$('#anw');if(aw){const ah=ANN();if(aw.dataset.h!==ah){if(aw.dataset.h!==undefined)aw.innerHTML=ah;aw.dataset.h=ah}}const wv=$('#wdb');if(wv){const hh=wd();if(wv.dataset.h!==hh){wv.innerHTML=hh;wv.dataset.h=hh}}const al=$('#alw');if(al){const hh=ALR();if(al.dataset.h!==hh){if(al.dataset.h!==undefined||al.innerHTML!==hh)al.innerHTML=hh;al.dataset.h=hh}}
  const n=new Date(),s=$('#st');if(s)s.textContent=stat();const k=$('#clk');if(k)k.textContent=pad(n.getHours())+':'+pad(n.getMinutes());
  if(!$('#cdd'))return;const df=new Date(D.hol.d)-n;
  if(df<=0){$('#cdd').textContent='0';$('#cdt').textContent='Канікули почались! 🥳';return}
