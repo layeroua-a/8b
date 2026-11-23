@@ -4,7 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#07080c">
+<meta name="color-scheme" content="dark">
 <title>Наш клас</title>
+<meta name="description" content="Розклад, домашка, дзвінки, карта школи та голосування нашого класу">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="64x64" href="icons/favicon-64.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="8-Б клас">
 <style>
 :root{--bg:#07080c;--c:#12141c;--c2:#1a1d28;--t:#f2f4fa;--m:#8b90a3;--a:#5b9cff;--b:#9d7bff;--g:#3ddc97;--ln:#ffffff14;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -176,7 +185,7 @@ const H=(d,s)=>{const t=(D.hw||{})[iso(d)+'|'+s];return t?`<div class=hw>${ico('
 let pm=0,pI='',hdt=(()=>{const d=new Date();d.setDate(d.getDate()+1);while(d.getDay()%6==0)d.setDate(d.getDate()+1);return iso(d)})();
 
 function R(){if(tab=='vot'&&D.poll.on===false)tab='sch';
- $('#app').innerHTML=`<header><div><div class=cl>${e(D.cls)}</div><div id=st></div></div><div class=hr>${IB()?`<button class=ibt onclick="inb()">${ico('msg')}</button>`:''}<div class=clk id=clk></div></div></header><div id=anw>${ANN()}</div><main id=v></main><nav>${TB.filter(x=>x[0]!='vot'||D.poll.on!==false).map(([k,i,n])=>`<button class="${k==tab?'on':''}" onclick="tab='${k}';R()"><span>${ico(i)}</span>${n}</button>`).join('')}</nav>`;
+ $('#app').innerHTML=`<header><div><div class=cl>${e(D.cls)}</div><div id=st></div></div><div class=hr>${IBI()}${IB()?`<button class=ibt onclick="inb()">${ico('msg')}</button>`:''}<div class=clk id=clk></div></div></header><div id=anw>${ANN()}</div><main id=v></main><nav>${TB.filter(x=>x[0]!='vot'||D.poll.on!==false).map(([k,i,n])=>`<button class="${k==tab?'on':''}" onclick="tab='${k}';R()"><span>${ico(i)}</span>${n}</button>`).join('')}</nav>`;
  V();tick();if(tab=='vot')fbLoad();
 }
 function V(){const f={sch:vSch,hw:vHw,bel:vBel,tea:vTea,lnk:vLnk,hol:vHol,vot:vVot}[tab];const v=$('#v');if(!v)return;v.innerHTML=f();v.className='';void v.offsetWidth;v.className='in';tick();mapInit()}
@@ -320,18 +329,29 @@ function inb(){if($('#inb'))return;const d=document.createElement('div');d.class
  d.innerHTML=`<div class=insc><b style="font-size:18px">Анонімна скринька</b><small>Ідея, побажання чи скарга — староста побачить, а хто написав, ніхто не дізнається.</small><textarea id=it maxlength=400 rows=4 placeholder="Напиши тут…"></textarea><div class=ibs><button class=ib2 onclick="this.closest('.ins').remove()">Закрити</button><button class="ib2 on" onclick="sendIdea()">Надіслати</button></div></div>`;document.body.append(d)}
 async function sendIdea(){const t=$('#it').value.trim();if(t.length<3)return;if(Date.now()-(+localStorage.getItem('idt')||0)<60000){toast('Зачекай хвилинку перед наступним повідомленням');return}
  try{const r=await fetch(fbu()+'/ideas.json',{method:'POST',body:JSON.stringify({t,ts:Date.now()})});if(!r.ok)throw 0;localStorage.setItem('idt',Date.now());$('#inb').remove();toast('Дякуємо! Надіслано анонімно')}catch(_){toast('Не вдалось надіслати')}}
-let dip=null;window.addEventListener('beforeinstallprompt',ev=>{ev.preventDefault();dip=ev});
-function a2(){
- if(localStorage.getItem('a2')||matchMedia('(display-mode: standalone)').matches||navigator.standalone)return;
- setTimeout(()=>{if($('#ins')||adm)return;const d=document.createElement('div');d.id='ins';d.className='ins';
-  d.innerHTML=`<div class=insc><div class=ic style="--h:215;width:46px;height:46px">${ico('cal')}</div><b style="font-size:18px">Додай сайт на екран телефону</b><small>Відкриватиметься як застосунок — без адресного рядка, одним дотиком.</small><div class=how id=how></div><div class=ibs id=ibs><button class=ib2 onclick="a2x(0)">Не зараз</button><button class="ib2 on" onclick="a2x(1)">Додати</button></div></div>`;document.body.append(d)},3500)}
-function a2x(ok){
- const done=()=>{localStorage.setItem('a2',1);const x=$('#ins');if(x)x.remove()};
- if(!ok)return done();
- if(dip){dip.prompt();dip.userChoice.finally(done);return}
- const ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
- $('#how').innerHTML=ios?'<ol><li>Натисни <b>«Поділитися»</b> (квадрат зі стрілкою) внизу Safari</li><li>Обери <b>«На початковий екран»</b></li><li>Натисни <b>«Додати»</b></li></ol>':'<ol><li>Натисни <b>⋮</b> (меню) у Chrome</li><li>Обери <b>«Додати на головний екран»</b> або <b>«Встановити застосунок»</b></li><li>Підтверди</li></ol>';
+let dip=null;
+const SA=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+const IOS=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform=='MacIntel'&&navigator.maxTouchPoints>1);
+const canI=()=>!SA()&&!!(dip||IOS);
+const IBI=()=>canI()?`<button class=ibt id=ibi onclick="inst()" aria-label="Встановити застосунок" title="Встановити застосунок">${ico('dwn')}</button>`:'';
+function ibiSync(){const h=$('header .hr'),b=$('#ibi');if(!h)return;if(canI()&&!b)h.insertAdjacentHTML('afterbegin',IBI());else if(!canI()&&b)b.remove()}
+window.addEventListener('beforeinstallprompt',ev=>{ev.preventDefault();dip=ev;ibiSync()});
+window.addEventListener('appinstalled',()=>{dip=null;try{localStorage.setItem('a2',1)}catch(_){}const x=$('#ins');if(x)x.remove();ibiSync();toast('Застосунок встановлено ✓')});
+function insSheet(how){if($('#ins')||adm)return;const d=document.createElement('div');d.id='ins';d.className='ins';d.onclick=ev=>{if(ev.target==d)a2x(0)};
+ d.innerHTML=`<div class=insc><img src="icons/icon-192.png" alt="" width=56 height=56 style="border-radius:14px"><b style="font-size:18px">Встанови «${e(D.cls)}» як застосунок</b><small>Іконка на головному екрані, відкривається без адресного рядка, а розклад і ДЗ видно навіть без інтернету.</small><div class=how id=how></div><div class=ibs id=ibs><button class=ib2 onclick="a2x(0)">Не зараз</button><button class="ib2 on" onclick="a2x(1)">Встановити</button></div></div>`;document.body.append(d);if(how)insHow()}
+function insHow(){
+ $('#how').innerHTML=IOS?'<ol><li>Натисни <b>«Поділитися»</b> (квадрат зі стрілкою) у Safari</li><li>Обери <b>«На початковий екран»</b></li><li>Натисни <b>«Додати»</b></li></ol>':'<ol><li>Натисни <b>⋮</b> (меню) у браузері</li><li>Обери <b>«Встановити застосунок»</b> або <b>«Додати на головний екран»</b></li><li>Підтверди</li></ol>';
  $('#ibs').innerHTML='<button class="ib2 on" onclick="a2x(0)">Зрозуміло</button>'}
+function a2(){
+ try{if(localStorage.getItem('a2'))return}catch(_){}
+ if(SA())return;
+ setTimeout(()=>insSheet(0),3500)}
+function inst(){if(dip)return a2x(1);insSheet(1)}
+function a2x(ok){
+ const done=()=>{try{localStorage.setItem('a2',1)}catch(_){}const x=$('#ins');if(x)x.remove()};
+ if(!ok)return done();
+ if(dip){const p=dip;dip=null;p.prompt();p.userChoice.catch(()=>{}).finally(()=>{done();ibiSync()});return}
+ insHow()}
 async function fbLoad(){if(!D.fb||tab!='vot'||adm)return;try{const j=await(await fetch(fbu()+'/votes/'+D.poll.id+'.json')).json()||{};VT=Object.values(j).map(o=>({p:D.poll.id,o}));live=1;if(tab=='vot'&&!adm)V()}catch(_){}}
 setInterval(fbLoad,8000);
 function vote(i){const p=D.poll;localStorage.setItem('mv'+p.id,i);if(D.fb)fetch(fbu()+'/votes/'+p.id+'/'+dev+'.json',{method:'PUT',body:JSON.stringify(i)}).then(fbLoad).catch(()=>{});else if(live&&uid){window._db.collection('votes').doc(uid).set({p:p.id,o:i}).catch(()=>{})}V()}
@@ -471,7 +491,8 @@ async function save(){
  }catch(x){msg='Помилка: '+(x.message||x)}
  toast(msg);
 }
-Promise.race([fetch('data.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null),new Promise(r=>setTimeout(r,2500))]).catch(()=>null).then(j=>{if(j&&j.v>(D.v||0)){D=j;NORM()}R();a2()});
+Promise.race([fetch('data.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null),new Promise(r=>setTimeout(r,2500))]).catch(()=>null).then(j=>{if(j&&j.v>(D.v||0)){D=j;NORM();try{localStorage.setItem('cls',JSON.stringify(D))}catch(_){}}R();a2()});
+if('serviceWorker' in navigator&&isSecureContext&&!window.claude)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 (async()=>{try{if(!window.claude)return;const u=await claude.use('user'),db=await claude.use('db');if(u&&db&&!D.fb){uid=await u.id();window._db=db;db.collection('votes').onSnapshot(s=>{VT=s.docs.map(d=>d.data());live=1;if(tab=='vot'&&!adm)V()})}}catch(_){}})();
 </script>
 </body>
